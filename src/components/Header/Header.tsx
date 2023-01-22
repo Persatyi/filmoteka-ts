@@ -6,12 +6,14 @@ import SearchField from "./SearchField";
 
 const Header = () => {
   return (
-    <header className={s.header}>
-      <Container>
-        <Navigation />
-        <SearchField />
-      </Container>
-    </header>
+    <>
+      <header className={s.header}>
+        <Container>
+          <Navigation />
+          <SearchField />
+        </Container>
+      </header>
+    </>
   );
 };
 

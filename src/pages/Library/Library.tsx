@@ -1,7 +1,7 @@
 // import s from "./Library.module.scss"
 
 const Library = () => {
-  return <></>;
+  return <>Library</>;
 };
 
 export default Library;

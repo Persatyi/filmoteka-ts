@@ -1,17 +1,20 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import Header from "components/Header";
+import Layout from "components/Layout";
 import Home from "pages/Home";
 import Library from "pages/Library";
+import NotFoundPage from "pages/NotFoundPage";
 
 const App: React.FC = () => {
   return (
     <>
-      <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/library" element={<Library />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="library" element={<Library />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
       </Routes>
     </>
   );
