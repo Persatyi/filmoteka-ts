@@ -1,7 +1,7 @@
 import React from "react";
+import CssBaseline from "@mui/material/CssBaseline";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import "modern-normalize";
 import "./index.scss";
 import App from "./App";
 
@@ -11,6 +11,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <React.StrictMode>
+      <CssBaseline />
       <App />
     </React.StrictMode>
   </BrowserRouter>
