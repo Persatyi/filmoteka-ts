@@ -15,7 +15,7 @@ declare module "@mui/material/styles" {
 
   // allow configuration using `createTheme`
   interface PaletteOptions {
-    custom: {
+    custom?: {
       main: string;
       text?: string;
       bg?: string;
@@ -36,7 +36,7 @@ export const theme = createTheme({
       footer: "#545454",
     },
   },
-  spacing: [10, 15],
+  spacing: [20, 15],
   breakpoints: {
     values: {
       xs: 0,

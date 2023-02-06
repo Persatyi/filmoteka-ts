@@ -24,12 +24,30 @@ const Navigation: React.FC = () => {
   const currentTab = routeMatch?.pattern?.path;
 
   return (
-    <AppBar position="static" color="transparent">
+    <AppBar
+      position="static"
+      color="transparent"
+      sx={{ boxShadow: "unset", "& MuiToolbar": { minHeight: "0px" } }}
+    >
       <Toolbar disableGutters sx={s.toolbar}>
-        <svg width="24px" height="24px">
-          <use href={`${sprite}#icon-film`}></use>
-        </svg>
         <Tab
+          disableRipple
+          icon={
+            <svg width="24px" height="24px">
+              <use href={`${sprite}#icon-film`}></use>
+            </svg>
+          }
+          value="/"
+          to="/"
+          component={Link}
+          sx={s.icon}
+        />
+        <Tab
+          icon={
+            <svg width="24px" height="24px" style={{ margin: "0px" }}>
+              <use href={`${sprite}#icon-film`}></use>
+            </svg>
+          }
           label=" filmoteka"
           disableRipple
           value="/"
@@ -37,12 +55,13 @@ const Navigation: React.FC = () => {
           component={Link}
           sx={s.label}
         />
+
         <Tabs
           value={currentTab}
-          sx={{ ml: "auto" }}
+          sx={{ ml: "auto", minHeight: "0px" }}
           textColor="inherit"
           TabIndicatorProps={{
-            style: { background: "#ff6b08", bottom: "30px" },
+            style: { background: "#ff6b08" },
           }}
         >
           <Tab

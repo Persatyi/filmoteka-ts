@@ -1,5 +1,14 @@
+const icon = {
+  display: { xs: "flex", mobile: "none" },
+  padding: "0px",
+  minWidth: "0px",
+  minHeight: "0px",
+};
+
 const label = {
   display: { xs: "none", mobile: "flex" },
+  flexDirection: "row",
+  alignItems: "baseline",
   fontFamily: "Roboto, sans-serif",
   fontSize: 30,
   lineHeight: 1.16,
@@ -8,10 +17,11 @@ const label = {
   color: "primary.contrastText",
   textTransform: "capitalize",
   padding: "0px",
-  ml: "10px",
+  gap: "10px",
+  minHeight: "0px",
 };
 
-const toolbar = { minHeight: 0, display: "flex", alignItems: "baseline" };
+const toolbar = { minHeight: "0px", display: "flex", alignItems: "baseline" };
 const tab = {
   color: "primary.contrastText",
   fontFamily: "Roboto, sans-serif",
@@ -20,7 +30,7 @@ const tab = {
   lineHeight: 1.16,
   padding: "0px",
   minWidth: "35px",
-  minHeight: "20px",
+  minHeight: "0px",
 };
 
-export { label, tab, toolbar };
+export { label, tab, toolbar, icon };
