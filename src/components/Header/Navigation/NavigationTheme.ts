@@ -7,7 +7,6 @@ const icon = {
 
 const label = {
   display: { xs: "none", mobile: "flex" },
-  flexDirection: "row",
   alignItems: "baseline",
   fontFamily: "Roboto, sans-serif",
   fontSize: 30,

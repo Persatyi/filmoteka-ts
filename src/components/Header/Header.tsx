@@ -1,18 +1,31 @@
-import s from "./Header.module.scss";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { Box } from "@mui/material/";
 
+import Background from "./Background";
 import Container from "components/Container";
 import Navigation from "./Navigation";
-import SearchField from "./SearchField";
 
 const Header = () => {
+  const { pathname } = useLocation();
+  const [value, setValue] = useState(pathname === "/" ? 0 : 1);
+
   return (
     <>
-      <header className={s.header}>
+      <Box
+        component="header"
+        sx={{
+          height: "230px",
+          pt: "45px",
+          backgroundColor: "#545454",
+          width: "100%",
+        }}
+      >
+        <Background type={value} />
         <Container>
-          <Navigation />
-          <SearchField />
+          <Navigation update={setValue} />
         </Container>
-      </header>
+      </Box>
     </>
   );
 };

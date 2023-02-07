@@ -9,9 +9,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <BrowserRouter>
-    <React.StrictMode>
-      <CssBaseline />
-      <App />
-    </React.StrictMode>
+    <CssBaseline />
+    <App />
   </BrowserRouter>
 );
