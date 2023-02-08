@@ -6,7 +6,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           "& label": {
-            color: "white",
+            color: "#ffffff",
           },
           "& .MuiInput-underline:before": {
             borderBottomColor: "#ffffff",

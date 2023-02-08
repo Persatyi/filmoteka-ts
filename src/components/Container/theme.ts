@@ -10,7 +10,6 @@ declare module "@mui/material/styles" {
     mobile: true; // adds the `mobile` breakpoint
     tablet: true;
     laptop: true;
-    desktop: true;
   }
 
   // allow configuration using `createTheme`
@@ -36,14 +35,13 @@ export const theme = createTheme({
       footer: "#545454",
     },
   },
-  spacing: [20, 15],
+  spacing: [20, 15, 30],
   breakpoints: {
     values: {
       xs: 0,
       mobile: 480,
       tablet: 768,
       laptop: 1024,
-      desktop: 1280,
     },
   },
 });
@@ -59,12 +57,9 @@ export const Root = styled("div")(({ theme }) => ({
   [theme.breakpoints.up("tablet")]: {
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),
-    maxWidth: 768,
+    maxWidth: 648,
   },
   [theme.breakpoints.up("laptop")]: {
-    maxWidth: 1024,
-  },
-  [theme.breakpoints.up("desktop")]: {
-    maxWidth: 1280,
+    maxWidth: 972,
   },
 }));
