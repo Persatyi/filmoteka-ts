@@ -70,12 +70,15 @@ const Navigation: React.FC<IProps> = ({ update }) => {
 
   return (
     <>
-      <AppBar
-        position="static"
-        color="transparent"
-        sx={{ boxShadow: "unset", "& MuiToolbar": { minHeight: "0px" } }}
-      >
-        <Toolbar disableGutters sx={s.toolbar}>
+      <AppBar position="static" color="transparent" sx={{ boxShadow: "unset" }}>
+        <Toolbar
+          disableGutters
+          style={{
+            minHeight: "0px",
+            display: "flex",
+            alignItems: "baseline",
+          }}
+        >
           <Tab
             disableRipple
             icon={

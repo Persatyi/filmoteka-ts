@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CardMedia } from "@mui/material/";
+import { CardMedia } from "@mui/material";
 
 interface IProps {
   type: 0 | 1;
@@ -66,7 +66,7 @@ const Background: React.FC<IProps> = (props) => {
           component="img"
           src={require("../../../assets/images/header/mobile/secondary_bg.jpg")}
           alt="Main background"
-          aria-label="Main background"
+          aria-label="Secondary background"
           loading="lazy"
           height="230px"
           sx={{ position: "absolute", top: "0px", zIndex: "0" }}

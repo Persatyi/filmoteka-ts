@@ -20,7 +20,6 @@ const label = {
   minHeight: "0px",
 };
 
-const toolbar = { minHeight: "0px", display: "flex", alignItems: "baseline" };
 const tab = {
   color: "primary.contrastText",
   fontFamily: "Roboto, sans-serif",
@@ -32,4 +31,4 @@ const tab = {
   minHeight: "0px",
 };
 
-export { label, tab, toolbar, icon };
+export { label, tab, icon };

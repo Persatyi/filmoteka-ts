@@ -15,7 +15,7 @@ const SearchField = () => {
           color="primary"
           sx={{
             input: {
-              color: "primary.main",
+              color: "primary.light",
             },
           }}
         />

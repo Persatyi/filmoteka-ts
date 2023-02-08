@@ -15,17 +15,17 @@ export const theme = createTheme({
             borderBottomColor: "#ffffff",
           },
 
-          // "& .MuiOutlinedInput-root": {
-          //   "& fieldset": {
-          //     borderColor: "white",
-          //   },
-          //   "&:hover": {
-          //     borderColor: "white",
-          //   },
-          //   "&.Mui-focused fieldset": {
-          //     borderColor: "yellow",
-          //   },
-          // },
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "#ffffff",
+            },
+            "&:hover": {
+              borderColor: "#ffffff",
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "#ffffff",
+            },
+          },
         },
       },
     },
@@ -33,6 +33,7 @@ export const theme = createTheme({
   palette: {
     primary: {
       main: "#ff6b08",
+      light: "#ffffff",
     },
   },
 });
