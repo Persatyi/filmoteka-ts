@@ -15,8 +15,8 @@ const App: React.FC = () => {
           <Route index element={<Home />} />
           <Route path="library" element={<Library />} />
           <Route path="queue" element={<Queue />} />
-          <Route path="*" element={<NotFoundPage />} />
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );
