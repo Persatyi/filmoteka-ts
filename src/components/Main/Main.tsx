@@ -5,7 +5,13 @@ import { Box } from "@mui/material";
 
 const Main = () => {
   return (
-    <Box component="main" sx={{ pt: "60px", pb: "60px" }}>
+    <Box
+      component="main"
+      sx={{
+        pt: { xs: "20px", sm: "60px" },
+        pb: { xs: "40px", sm: "60px" },
+      }}
+    >
       <Container>
         <Outlet />
       </Container>

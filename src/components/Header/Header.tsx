@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Box } from "@mui/material/";
+import { Box } from "@mui/material";
 
 import Background from "./Background";
 import Container from "components/Container";

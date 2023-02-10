@@ -1,23 +1,29 @@
-// import s from "./Home.module.scss"
 import MovieCard from "components/MovieCard";
-import { Grid } from "@mui/material";
+import MoviePagination from "components/MoviePagination";
+import { Box } from "@mui/material";
 
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
 const Home = () => {
   return (
     <>
-      <Grid
-        container
-        rowSpacing={{ xs: 0, mobile: 0, tablet: 2, laptop: 2 }}
-        columnSpacing={{ xs: 0, mobile: 0, tablet: 2, laptop: 2 }}
+      <Box
+        display="grid"
+        gridTemplateColumns={{
+          xs: "repeat(1, 1fr)",
+          tablet: "repeat(2, 1fr)",
+          laptop: "repeat(3, 1fr)",
+        }}
+        gap={{ xs: 0, tablet: 2 }}
+        sx={{ justifyItems: { mobile: "center" } }}
       >
         {arr.map((el, index) => (
-          <Grid item xs={12} mobile={12} tablet={6} laptop={4}>
+          <Box gridColumn="span 1">
             <MovieCard key={index} />
-          </Grid>
+          </Box>
         ))}
-      </Grid>
+      </Box>
+      <MoviePagination />
     </>
   );
 };
