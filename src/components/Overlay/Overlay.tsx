@@ -2,19 +2,24 @@ import React from "react";
 import Backdrop from "@mui/material/Backdrop";
 
 interface IProps {
-  onClick: Function;
+  onClose: Function;
   children: JSX.Element;
   open: boolean;
 }
 
-const Overlay: React.FC<IProps> = ({ onClick, children, open }) => {
+const Overlay: React.FC<IProps> = ({ onClose, children, open }) => {
   const handleClick = (e: React.SyntheticEvent) => {
-    if (e.target === e.currentTarget) onClick();
+    if (e.target === e.currentTarget) onClose();
   };
 
   return (
     <Backdrop
-      sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      sx={{
+        color: "#fff",
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+        overflowY: "auto",
+        alignItems: { xs: "start", tablet: "center" },
+      }}
       open={open}
       onClick={handleClick}
     >

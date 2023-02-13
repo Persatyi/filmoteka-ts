@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
+import Overlay from "components/Overlay";
+
 interface IProps {
   onClose: Function;
   open: boolean;
@@ -19,7 +21,14 @@ const ModalWrapper: React.FC<IProps> = ({ onClose, open, children }) => {
     return () => window.removeEventListener("keydown", onEscPress);
   }, [onClose]);
 
-  return open ? createPortal(<>{children}</>, modalRef.current!) : null;
+  return open
+    ? createPortal(
+        <Overlay onClose={onClose} open={open}>
+          {children}
+        </Overlay>,
+        modalRef.current!
+      )
+    : null;
 };
 
 export default ModalWrapper;

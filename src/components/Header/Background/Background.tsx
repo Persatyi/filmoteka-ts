@@ -11,7 +11,15 @@ const Background: React.FC<IProps> = (props) => {
 
   if (type === 0) {
     return (
-      <CardMedia component="picture">
+      <CardMedia
+        component="picture"
+        sx={{
+          position: "absolute",
+          top: "0px",
+          bottom: "0px",
+          zIndex: "0",
+        }}
+      >
         <CardMedia
           component="source"
           srcSet={`${require("../../../assets/images/header/desktop/main_bg.jpg")} 1x, ${require("../../../assets/images/header/desktop/main_bg_2x.jpg")} 2x,`}
@@ -37,13 +45,15 @@ const Background: React.FC<IProps> = (props) => {
           aria-label="Main background"
           loading="lazy"
           height="230px"
-          sx={{ position: "absolute", top: "0px", zIndex: "0" }}
         />
       </CardMedia>
     );
   } else {
     return (
-      <CardMedia component="picture">
+      <CardMedia
+        component="picture"
+        sx={{ position: "absolute", top: "0px", bottom: "0px", zIndex: "0" }}
+      >
         <CardMedia
           component="source"
           srcSet={`${require("../../../assets/images/header/desktop/secondary_bg.jpg")} 1x, ${require("../../../assets/images/header/desktop/secondary_bg_2x.jpg")} 2x,`}
@@ -69,7 +79,6 @@ const Background: React.FC<IProps> = (props) => {
           aria-label="Secondary background"
           loading="lazy"
           height="230px"
-          sx={{ position: "absolute", top: "0px", zIndex: "0" }}
         />
       </CardMedia>
     );
