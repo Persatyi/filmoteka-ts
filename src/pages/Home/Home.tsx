@@ -1,10 +1,11 @@
 import MovieCard from "components/MovieCard";
 import MoviePagination from "components/MoviePagination";
 import { Box } from "@mui/material";
-
-const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+import { useAppSelector } from "hooks/hooks";
 
 const Home = () => {
+  const data = useAppSelector((state) => state.data.results);
+  console.log("🚀 ~ data", data);
   return (
     <>
       <Box
@@ -17,9 +18,9 @@ const Home = () => {
         gap={{ xs: 0, tablet: 2 }}
         sx={{ justifyItems: { mobile: "center" } }}
       >
-        {arr.map((el, index) => (
-          <Box gridColumn="span 1">
-            <MovieCard key={index} />
+        {data.map((element) => (
+          <Box gridColumn="span 1" key={element.id}>
+            <MovieCard data={element} />
           </Box>
         ))}
       </Box>
