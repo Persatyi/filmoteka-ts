@@ -1,21 +1,31 @@
-export function fetchPopular() {
-  return fetch(
-    "https://api.themoviedb.org/3/trending/all/day?api_key=bb3168696e35626f9e0ec9a6cc22697e"
-  ).then((response) => {
-    if (!response.ok) {
-      throw new Error(`${response.status}`);
-    }
-    return response.json();
-  });
-}
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
-export function fetchGenres() {
-  return fetch(
-    "https://api.themoviedb.org/3/genre/movie/list?api_key=bb3168696e35626f9e0ec9a6cc22697e"
-  ).then((response) => {
-    if (!response.ok) {
-      throw new Error(`${response.status}`);
+export const fetchPopular = createAsyncThunk(
+  "data/fetchPopular",
+  async (_, thunkAPI) => {
+    try {
+      const response = await fetch(
+        "https://api.themoviedb.org/3/trending/all/day?api_key=bb3168696e35626f9e0ec9a6cc22697e"
+      );
+
+      return await response.json();
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-    return response.json();
-  });
-}
+  }
+);
+
+export const fetchGenres = createAsyncThunk(
+  "data/fetchGenres",
+  async (_, thunkAPI) => {
+    try {
+      const response = await fetch(
+        "https://api.themoviedb.org/3/genre/movie/list?api_key=bb3168696e35626f9e0ec9a6cc22697e&language=en-US"
+      );
+
+      return await response.json();
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

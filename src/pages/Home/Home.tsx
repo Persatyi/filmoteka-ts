@@ -5,7 +5,6 @@ import { useAppSelector } from "hooks/hooks";
 
 const Home = () => {
   const data = useAppSelector((state) => state.data.results);
-  console.log("🚀 ~ data", data);
   return (
     <>
       <Box
