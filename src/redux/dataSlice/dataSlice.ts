@@ -8,6 +8,7 @@ interface IInitialData {
   totalPages: number;
   isLoading: boolean;
   error: null | string;
+  isOpen: false;
 }
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
   results: [],
   page: 1,
   totalPages: 0,
+  isOpen: false,
 } as IInitialData;
 
 const dataSlice = createSlice({

@@ -1,15 +1,7 @@
-import React, { useState } from "react";
-import ModalWrapper from "components/ModalWrapper";
-import MovieModal from "components/Modals/MovieModal";
+import React from "react";
 
 const Library: React.FC = () => {
-  const [open, setOpen] = useState(true);
-
-  return (
-    <ModalWrapper open={open} onClose={setOpen}>
-      <MovieModal />
-    </ModalWrapper>
-  );
+  return <>Library</>;
 };
 
 export default Library;

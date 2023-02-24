@@ -6,7 +6,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           "& .Mui-selected": {
-            color: "#ffffff",
+            color: "#fff",
           },
           "& .MuiPaginationItem-root": {
             fontFamily: "Roboto, sans-serif",

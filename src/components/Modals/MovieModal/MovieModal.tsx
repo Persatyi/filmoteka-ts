@@ -5,7 +5,53 @@ import { ThemeProvider } from "@mui/material/styles";
 import * as s from "./MovieModalTheme";
 import sprite from "assets/images/Sprite/sprite.svg";
 
-const MovieModal: React.FC = () => {
+import { useAppSelector } from "hooks/hooks";
+import { get, genresKey } from "localStorage/localStorage";
+
+let allGenres: { id: number; name: string }[];
+
+(async function () {
+  const { genres } = await get(genresKey);
+  allGenres = genres;
+})();
+
+interface IProps {
+  onClose: () => void;
+  id: number;
+}
+
+const MovieModal: React.FC<IProps> = (props) => {
+  const { onClose, id } = props;
+
+  const data = useAppSelector((state) => state.data.results);
+
+  const {
+    overview,
+    vote_average,
+    vote_count,
+    popularity,
+    original_title,
+    poster_path,
+    title,
+    name,
+    original_name,
+    genre_ids,
+  } = data.find((el) => el.id === id);
+
+  const genresNames =
+    genre_ids
+      .filter((id: number) => allGenres[id])
+      .map((id: number) => allGenres[id].name)
+      .join(", ") || "Genre is not specified";
+
+  const filmTitle = original_title || title || name || original_name;
+  let rating = "0.0";
+  if (String(vote_average)?.length === 1) {
+    rating = vote_average + ".0";
+  } else {
+    rating = vote_average === 10 ? "10.0" : String(vote_average).slice(0, 3);
+  }
+
   return (
     <Box component="div" sx={s.border}>
       <Button
@@ -17,21 +63,22 @@ const MovieModal: React.FC = () => {
           minHeight: "15px",
           padding: "0px",
         }}
+        onClick={onClose}
       >
-        <svg width="15px" height="15px" style={{}}>
+        <svg width="15px" height="15px">
           <use href={`${sprite}#icon-cross`}></use>
         </svg>
       </Button>
 
       <Box
         component="img"
-        src={require("../../../assets/images/Rectangle.jpg")}
+        src={`https://image.tmdb.org/t/p/w500${poster_path}`}
         alt="img"
         sx={s.image}
       />
       <Box>
         <Typography component="h3" sx={s.title}>
-          A FISTFUL OF LEAD
+          {original_title}
         </Typography>
         <Box component="ul" sx={{ mb: { xs: "20px" } }}>
           <Box component="li" sx={s.item}>
@@ -56,7 +103,7 @@ const MovieModal: React.FC = () => {
                 textAlign: "center",
               }}
             >
-              7.3
+              {rating}
             </Typography>
             <Typography
               component="span"
@@ -82,7 +129,7 @@ const MovieModal: React.FC = () => {
                 lineHeight: 1.33,
               }}
             >
-              1260
+              {vote_count}
             </Typography>
           </Box>
           <Box component="li" sx={s.item}>
@@ -99,7 +146,7 @@ const MovieModal: React.FC = () => {
                 lineHeight: 1.33,
               }}
             >
-              100.2
+              {popularity}
             </Typography>
           </Box>
           <Box component="li" sx={s.item}>
@@ -116,7 +163,7 @@ const MovieModal: React.FC = () => {
                 lineHeight: 1.33,
               }}
             >
-              A FISTFUL OF LEAD
+              {filmTitle}
             </Typography>
           </Box>
           <Box component="li" sx={{ ...s.item, mb: "0px" }}>
@@ -133,7 +180,7 @@ const MovieModal: React.FC = () => {
                 lineHeight: 1.33,
               }}
             >
-              Western
+              {genresNames}
             </Typography>
           </Box>
         </Box>
@@ -161,14 +208,7 @@ const MovieModal: React.FC = () => {
             mt: { xs: "10px" },
           }}
         >
-          Four of the West’s most infamous outlaws assemble to steal a huge
-          stash of gold from the most corrupt settlement of the gold rush towns.
-          But not all goes to plan one is killed and the other three escapes
-          with bags of gold hide out in the abandoned gold mine where they
-          happen across another gang of three – who themselves were planning to
-          hit the very same bank! As tensions rise, things go from bad to worse
-          as they realise the bags of gold are filled with lead... they’ve been
-          double crossed – but by who and how?
+          {overview}
         </Typography>
         <Box
           component="div"
