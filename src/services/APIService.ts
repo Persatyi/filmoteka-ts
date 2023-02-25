@@ -2,10 +2,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchPopular = createAsyncThunk(
   "data/fetchPopular",
-  async (_, thunkAPI) => {
+  async (page: number, thunkAPI) => {
     try {
       const response = await fetch(
-        "https://api.themoviedb.org/3/trending/all/day?api_key=bb3168696e35626f9e0ec9a6cc22697e"
+        `https://api.themoviedb.org/3/trending/all/day?api_key=bb3168696e35626f9e0ec9a6cc22697e&page=${page}`
       );
 
       return await response.json();

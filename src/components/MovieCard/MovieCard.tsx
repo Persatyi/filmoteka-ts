@@ -45,13 +45,17 @@ const MovieCard: React.FC<IProps> = ({ data }) => {
     genre_ids,
   } = data;
 
+  const poster = poster_path
+    ? `https://image.tmdb.org/t/p/w500${poster_path}`
+    : require("../../assets/images/noImage.jpg");
   const filmTitle = title || name || original_name;
   const year = new Date(first_air_date || release_date).getFullYear() || "";
-  const genresNames =
-    genre_ids
-      .filter((id) => allGenres[id])
-      .map((id) => allGenres[id].name)
-      .join(", ") || "Genre is not specified";
+  const genresNames = genre_ids
+    ? genre_ids
+        .filter((id) => allGenres[id])
+        .map((id) => allGenres[id].name)
+        .join(", ") || "Genre is not specified"
+    : "Genre is not specified";
 
   return (
     <Card
@@ -65,7 +69,7 @@ const MovieCard: React.FC<IProps> = ({ data }) => {
           component="img"
           alt="movie"
           height="398px"
-          image={`https://image.tmdb.org/t/p/w500${poster_path}`}
+          image={poster}
           sx={{
             borderRadius: "5px",
             objectFit: "cover",

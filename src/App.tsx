@@ -16,7 +16,7 @@ const App: React.FC = () => {
 
   const fetchData = async () => {
     await dispatch(fetchGenres());
-    await dispatch(fetchPopular());
+    await dispatch(fetchPopular(1));
   };
 
   useEffect(() => {

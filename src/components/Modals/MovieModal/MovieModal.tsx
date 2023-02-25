@@ -38,11 +38,16 @@ const MovieModal: React.FC<IProps> = (props) => {
     genre_ids,
   } = data.find((el) => el.id === id);
 
-  const genresNames =
-    genre_ids
-      .filter((id: number) => allGenres[id])
-      .map((id: number) => allGenres[id].name)
-      .join(", ") || "Genre is not specified";
+  const genresNames = genre_ids
+    ? genre_ids
+        .filter((id: number) => allGenres[id])
+        .map((id: number) => allGenres[id].name)
+        .join(", ") || "Genre is not specified"
+    : "Genre is not specified";
+
+  const poster = poster_path
+    ? `https://image.tmdb.org/t/p/w500${poster_path}`
+    : require("../../../assets/images/noImage.jpg");
 
   const filmTitle = original_title || title || name || original_name;
   let rating = "0.0";
@@ -70,12 +75,7 @@ const MovieModal: React.FC<IProps> = (props) => {
         </svg>
       </Button>
 
-      <Box
-        component="img"
-        src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-        alt="img"
-        sx={s.image}
-      />
+      <Box component="img" src={poster} alt="img" sx={s.image} />
       <Box>
         <Typography component="h3" sx={s.title}>
           {original_title}
@@ -197,19 +197,27 @@ const MovieModal: React.FC<IProps> = (props) => {
         >
           About
         </Typography>
-        <Typography
-          component="p"
+        <Box
           sx={{
-            color: "common.black",
-            fontFamily: "Roboto, sans-serif",
-            fontWeight: 500,
-            fontSize: "12px",
-            lineHeight: 1.66,
             mt: { xs: "10px" },
+            height: "125px",
+            overflow: "hidden",
+            overflowY: "auto",
           }}
         >
-          {overview}
-        </Typography>
+          <Typography
+            component="p"
+            sx={{
+              color: "common.black",
+              fontFamily: "Roboto, sans-serif",
+              fontWeight: 500,
+              fontSize: "12px",
+              lineHeight: 1.66,
+            }}
+          >
+            {overview}
+          </Typography>
+        </Box>
         <Box
           component="div"
           sx={{

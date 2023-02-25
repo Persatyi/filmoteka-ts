@@ -5,6 +5,8 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { ThemeProvider } from "@mui/material/styles";
 
 import { useWindowSize } from "hooks";
+import { useAppDispatch } from "hooks/hooks";
+import { fetchPopular } from "services/APIService";
 
 import * as s from "./MoviePaginationTheme";
 
@@ -16,10 +18,15 @@ interface IProps {
 const MoviePagination: React.FC<IProps> = (props) => {
   const { page, count } = props;
 
+  const dispatch = useAppDispatch();
+
   const { width } = useWindowSize();
 
-  const onChangeHandler = (event: React.ChangeEvent<unknown>, page: number) => {
-    console.log("🚀 ~ page:", page);
+  const onChangeHandler = async (
+    event: React.ChangeEvent<unknown>,
+    page: number
+  ) => {
+    await dispatch(fetchPopular(page));
   };
 
   return (
