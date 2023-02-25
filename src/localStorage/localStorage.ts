@@ -22,6 +22,6 @@ const remove = (key: string) => {
   }
 };
 
-const genres = "genres";
+const genresKey = "genres";
 
-export { get, save, remove, genres };
+export { get, save, remove, genresKey };
