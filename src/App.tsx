@@ -1,10 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { useEffect } from "react";
 
-import { fetchGenres } from "services/APIService";
-import { save, genres } from "localStorage/localStorage";
-import { useAppDispatch } from "hooks/hooks";
+import { useGetGenresQuery } from "services/APIService";
+import { save, genresKey } from "localStorage/localStorage";
 
 import Layout from "components/Layout";
 import Home from "pages/Home";
@@ -13,23 +11,15 @@ import Queue from "./pages/Queue/Queue";
 import NotFoundPage from "pages/NotFoundPage";
 
 const App: React.FC = () => {
-  const dispatch = useAppDispatch();
+  const { data, error } = useGetGenresQuery();
 
-  const fetchData = async () => {
-    await fetchGenres()
-      .then((data) => {
-        if (data !== null && data !== undefined) {
-          save(genres, data);
-        }
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
+  if (error) {
+    console.log(error);
+  }
 
-  useEffect(() => {
-    fetchData();
-  });
+  if (data) {
+    save(genresKey, data);
+  }
 
   return (
     <>

@@ -5,11 +5,7 @@ import MovieModal from "components/Modals/MovieModal";
 const Library: React.FC = () => {
   const [open, setOpen] = useState(true);
 
-  return (
-    <ModalWrapper open={open} onClose={setOpen}>
-      <MovieModal />
-    </ModalWrapper>
-  );
+  return <>Library</>;
 };
 
 export default Library;

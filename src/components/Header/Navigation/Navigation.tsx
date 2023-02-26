@@ -10,6 +10,8 @@ import sprite from "assets/images/Sprite/sprite.svg";
 import SearchField from "../SearchField";
 import Buttons from "../Buttons";
 
+import { useGetPopularQuery } from "services/APIService";
+
 interface TabPanelProps {
   children?: React.ReactNode;
   dir?: string;
@@ -48,10 +50,12 @@ function useRouteMatch(patterns: readonly string[]) {
 }
 
 interface IProps {
-  update: Function;
+  update: (value: number) => void;
 }
 
 const Navigation: React.FC<IProps> = ({ update }) => {
+  const { refetch } = useGetPopularQuery(1);
+
   const theme = useTheme();
 
   const routeMatch = useRouteMatch(["/", "/library"]);
@@ -66,6 +70,7 @@ const Navigation: React.FC<IProps> = ({ update }) => {
   const handleChangeIndex = (index: number) => {
     setValue(index);
     update(index);
+    refetch();
   };
 
   return (

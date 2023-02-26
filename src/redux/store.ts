@@ -1,25 +1,25 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/query";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import type { PreloadedState } from "@reduxjs/toolkit";
 import { moviesApi } from "services/APIService";
 
-const store = configureStore({
-  reducer: {
-    // Add the generated reducer as a specific top-level slice
-    [moviesApi.reducerPath]: moviesApi.reducer,
-  },
-  // Adding the api middleware enables caching, invalidation, polling,
-  // and other useful features of `rtk-query`.
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(moviesApi.middleware),
+const rootReducer = combineReducers({
+  // Add the generated reducer as a specific top-level slice
+  [moviesApi.reducerPath]: moviesApi.reducer,
 });
 
-// optional, but required for refetchOnFocus/refetchOnReconnect behaviors
-// see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
-setupListeners(store.dispatch);
+export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
+  return configureStore({
+    reducer: rootReducer,
+    // Adding the api middleware enables caching, invalidation, polling,
+    // and other useful features of `rtk-query`.
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(moviesApi.middleware),
+    preloadedState,
+  });
+};
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof rootReducer>;
 
-export default store;
+export type AppStore = ReturnType<typeof setupStore>;
+
+export type AppDispatch = AppStore["dispatch"];
