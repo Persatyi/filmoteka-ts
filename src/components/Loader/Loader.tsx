@@ -5,7 +5,7 @@ const Loader = () => {
   const array = [];
 
   for (let i = 1; i <= 20; i += 1) {
-    array.push(i);
+    array.push({ key: i });
   }
 
   return (
@@ -19,8 +19,8 @@ const Loader = () => {
       gap={{ xs: 0, tablet: 2 }}
       sx={{ justifyItems: { mobile: "center" } }}
     >
-      {array.map(() => (
-        <Box gridColumn="span 1">
+      {array.map((el) => (
+        <Box gridColumn="span 1" key={el.key}>
           <Skeleton
             animation="wave"
             component="div"

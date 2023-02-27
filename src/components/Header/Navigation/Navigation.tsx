@@ -10,7 +10,8 @@ import sprite from "assets/images/Sprite/sprite.svg";
 import SearchField from "../SearchField";
 import Buttons from "../Buttons";
 
-import { useGetPopularQuery } from "services/APIService";
+import { useAppDispatch } from "hooks/hooks";
+import { setPopular } from "redux/dataSlice/dataSlice";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -54,7 +55,7 @@ interface IProps {
 }
 
 const Navigation: React.FC<IProps> = ({ update }) => {
-  const { refetch } = useGetPopularQuery(1);
+  const dispatch = useAppDispatch();
 
   const theme = useTheme();
 
@@ -70,7 +71,7 @@ const Navigation: React.FC<IProps> = ({ update }) => {
   const handleChangeIndex = (index: number) => {
     setValue(index);
     update(index);
-    refetch();
+    dispatch(setPopular());
   };
 
   return (

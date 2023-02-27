@@ -1,29 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface IInitialData {
-  results: any[];
+  mode: "search" | "popular";
   page: number;
-  totalPages: number;
+  query: string;
 }
 
 const initialState = {
-  results: [],
+  mode: "popular",
   page: 1,
-  totalPages: 0,
+  query: "",
 } as IInitialData;
 
 const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
-    addData(state, { payload }) {
-      state.results = payload.results;
-      state.page = payload.page;
-      state.totalPages = payload.totalPages;
+    setSearch(state, { payload }) {
+      state.mode = "search";
+      state.page = 1;
+      state.query = payload;
+    },
+    setPopular(state) {
+      state.mode = "popular";
+      state.query = "";
+      state.page = 1;
+    },
+    setPage(state, { payload }) {
+      state.page = payload;
     },
   },
 });
 
-export const { addData } = dataSlice.actions;
+export const { setSearch, setPopular, setPage } = dataSlice.actions;
 
 export const dataReducer = dataSlice.reducer;

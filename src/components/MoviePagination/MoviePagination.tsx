@@ -5,23 +5,23 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { ThemeProvider } from "@mui/material/styles";
 
 import { useWindowSize } from "hooks";
+import { useAppDispatch } from "hooks/hooks";
+import { setPage } from "redux/dataSlice/dataSlice";
 
 import * as s from "./MoviePaginationTheme";
 
 interface IProps {
   page: number;
   count: number;
-  setPage: (page: number) => number;
 }
 
 const MoviePagination: React.FC<IProps> = (props) => {
-  const { page, count, setPage } = props;
+  const { page, count } = props;
 
-  const onChangeHandler = async (
-    event: React.ChangeEvent<unknown>,
-    page: number
-  ) => {
-    setPage(page);
+  const dispatch = useAppDispatch();
+
+  const onChangeHandler = (event: React.ChangeEvent<unknown>, page: number) => {
+    dispatch(setPage(page));
   };
 
   const { width } = useWindowSize();

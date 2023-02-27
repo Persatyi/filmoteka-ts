@@ -22,10 +22,17 @@ export const moviesApi = createApi({
       query: (page = 1) => `trending/all/day?api_key=${KEY}&page=${page}`,
       providesTags: ["Popular"],
     }),
+    searchMovie: builder.query<IMovies, { page: number | void; query: string }>(
+      {
+        query: ({ page = 1, query }) =>
+          `search/movie?api_key=${KEY}&language=en-US&page=${page}&include_adult=true&query=${query}`,
+      }
+    ),
     getGenres: builder.query<IGenres[], void>({
       query: () => `genre/movie/list?api_key=${KEY}`,
     }),
   }),
 });
 
-export const { useGetPopularQuery, useGetGenresQuery } = moviesApi;
+export const { useGetPopularQuery, useGetGenresQuery, useSearchMovieQuery } =
+  moviesApi;
