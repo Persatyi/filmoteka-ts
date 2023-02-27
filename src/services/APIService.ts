@@ -1,11 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+const KEY = "bb3168696e35626f9e0ec9a6cc22697e";
+
 export const fetchPopular = createAsyncThunk(
   "data/fetchPopular",
   async (page: number, thunkAPI) => {
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/trending/all/day?api_key=bb3168696e35626f9e0ec9a6cc22697e&page=${page}`
+        `https://api.themoviedb.org/3/trending/all/day?api_key=${KEY}&page=${page}`
       );
 
       return await response.json();
@@ -20,7 +22,7 @@ export const fetchGenres = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await fetch(
-        "https://api.themoviedb.org/3/genre/movie/list?api_key=bb3168696e35626f9e0ec9a6cc22697e&language=en-US"
+        `https://api.themoviedb.org/3/genre/movie/list?api_key=${KEY}&language=en-US`
       );
 
       return await response.json();
