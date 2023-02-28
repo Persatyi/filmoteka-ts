@@ -30,7 +30,7 @@ const Home: React.FC = () => {
   });
   const {
     data: searchData,
-    error: searchErorr,
+    error: searchError,
     isLoading: searchLoading,
     isFetching: isSearchFetching,
   } = useSearchMovieQuery({ page, query }, { skip: mode === "popular" });
@@ -79,7 +79,7 @@ const Home: React.FC = () => {
           </>
         ) : null)}
       {mode === "search" &&
-        (searchErorr ? (
+        (searchError ? (
           <p>Something went wrong please reload the page</p>
         ) : searchLoading ? (
           <Loader />
