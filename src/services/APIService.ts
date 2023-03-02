@@ -13,6 +13,14 @@ interface IGenres {
   name: string;
 }
 
+interface IVideo {
+  results: {
+    US: {
+      link: string;
+    };
+  };
+}
+
 export const moviesApi = createApi({
   reducerPath: "moviesApi",
   baseQuery: fetchBaseQuery({ baseUrl: "https://api.themoviedb.org/3/" }),
@@ -25,14 +33,21 @@ export const moviesApi = createApi({
     searchMovie: builder.query<IMovies, { page: number | void; query: string }>(
       {
         query: ({ page = 1, query }) =>
-          `search/movie?api_key=${KEY}&language=en-US&page=${page}&include_adult=true&query=${query}`,
+          `search/movie?api_key=${KEY}&language=en-US&page=${page}&include_adult=false&query=${query}`,
       }
     ),
     getGenres: builder.query<IGenres[], void>({
       query: () => `genre/movie/list?api_key=${KEY}`,
     }),
+    getVideo: builder.query<IVideo, number>({
+      query: (id) => `movie/${id}/watch/providers?api_key=${KEY}`,
+    }),
   }),
 });
 
-export const { useGetPopularQuery, useGetGenresQuery, useSearchMovieQuery } =
-  moviesApi;
+export const {
+  useGetPopularQuery,
+  useGetGenresQuery,
+  useSearchMovieQuery,
+  useGetVideoQuery,
+} = moviesApi;
