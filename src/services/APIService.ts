@@ -13,12 +13,22 @@ interface IGenres {
   name: string;
 }
 
+interface IVideoElement {
+  iso_639_1: string;
+  iso_3166_1: string;
+  name: string;
+  key: string;
+  site: string;
+  size: number;
+  type: string;
+  official: boolean;
+  published_at: string;
+  id: string;
+}
+
 interface IVideo {
-  results: {
-    US: {
-      link: string;
-    };
-  };
+  id: string;
+  results: IVideoElement[];
 }
 
 export const moviesApi = createApi({
@@ -40,7 +50,7 @@ export const moviesApi = createApi({
       query: () => `genre/movie/list?api_key=${KEY}`,
     }),
     getVideo: builder.query<IVideo, number>({
-      query: (id) => `movie/${id}/watch/providers?api_key=${KEY}`,
+      query: (id) => `movie/${id}/videos?api_key=${KEY}&language=en-US`,
     }),
   }),
 });

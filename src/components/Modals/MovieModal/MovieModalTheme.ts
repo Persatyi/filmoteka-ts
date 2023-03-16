@@ -11,11 +11,18 @@ const border = {
   backgroundColor: "common.white",
 };
 
+const imageWrapper = {
+  position: "relative",
+  mb: { xs: "25px", tablet: "unset" },
+  mr: { tablet: "30px" },
+  width: { xs: "240px", tablet: "264px", laptop: "396px" },
+  height: { xs: "355px", tablet: "373px", laptop: "477px" },
+};
+
 const image = {
   width: { xs: "240px", tablet: "264px", laptop: "396px" },
   height: { xs: "355px", tablet: "373px", laptop: "477px" },
-  mb: { xs: "25px", tablet: "unset" },
-  mr: { tablet: "30px" },
+  objectFit: "contain",
 };
 
 const title = {
@@ -63,10 +70,11 @@ export const button = createTheme({
           fontSize: "12px",
           lineHeight: 1.33,
           textAlign: "center",
+          alignContent: "end",
         },
       },
     },
   },
 });
 
-export { image, title, options, border, item };
+export { image, title, options, border, item, imageWrapper };

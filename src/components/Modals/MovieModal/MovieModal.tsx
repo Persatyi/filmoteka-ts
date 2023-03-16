@@ -1,11 +1,16 @@
-import React from "react";
-import { Box, Typography, Button } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Typography, Button, Menu, MenuItem } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
+import Tooltip from "@mui/material/Tooltip";
 
 import * as s from "./MovieModalTheme";
 import sprite from "assets/images/Sprite/sprite.svg";
+import VideoPlayer from "components/VideoPlayer";
 
 import { get, genresKey } from "localStorage/localStorage";
+import { useGetVideoQuery } from "services/APIService";
 
 let allGenres: { id: number; name: string }[];
 
@@ -36,6 +41,21 @@ interface IProps {
 
 const MovieModal: React.FC<IProps> = (props) => {
   const { onClose, id, data } = props;
+
+  const [mode, setMode] = useState("");
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (key = "") => {
+    setAnchorEl(null);
+    setMode(key);
+  };
+
+  const { data: youtubeVideo } = useGetVideoQuery(id);
 
   const movie: IData = data.find((el) => el.id === id)!;
   const {
@@ -71,153 +91,204 @@ const MovieModal: React.FC<IProps> = (props) => {
   }
 
   return (
-    <Box component="div" sx={s.border}>
-      <Button
-        sx={{
-          position: "absolute",
-          top: "10px",
-          right: "10px",
-          minWidth: "15px",
-          minHeight: "15px",
-          padding: "0px",
-        }}
-        onClick={onClose}
-      >
-        <svg width="15px" height="15px">
-          <use href={`${sprite}#icon-cross`}></use>
-        </svg>
-      </Button>
-
-      <Box component="img" src={poster} alt="img" sx={s.image} />
-      <Box>
-        <Typography component="h3" sx={s.title}>
-          {original_title}
-        </Typography>
-        <Box component="ul" sx={{ mb: { xs: "20px" } }}>
-          <Box component="li" sx={s.item}>
-            <Typography component="span" sx={s.options}>
-              Vote / Votes
-            </Typography>
-            <Typography
-              component="span"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "36px",
-                height: "16px",
-                backgroundColor: "custom.main",
-                borderRadius: "5px",
-                color: "common.white",
-                fontFamily: "Roboto, sans-serif",
-                fontWeight: 500,
-                fontSize: "12px",
-                lineHeight: 1.16,
-                textAlign: "center",
-              }}
-            >
-              {rating}
-            </Typography>
-            <Typography
-              component="span"
-              sx={{
-                ml: { xs: "3px" },
-                mr: { xs: "3px" },
-                color: "custom.params",
-                fontFamily: "Roboto, sans-serif",
-                fontWeight: 500,
-                fontSize: "12px",
-                lineHeight: 1.33,
-              }}
-            >
-              /
-            </Typography>
-            <Typography
-              component="span"
-              sx={{
-                color: "common.black",
-                fontFamily: "Roboto, sans-serif",
-                fontWeight: 500,
-                fontSize: "12px",
-                lineHeight: 1.33,
-              }}
-            >
-              {vote_count}
-            </Typography>
-          </Box>
-          <Box component="li" sx={s.item}>
-            <Typography component="span" sx={s.options}>
-              Popularity
-            </Typography>
-            <Typography
-              component="span"
-              sx={{
-                color: "common.black",
-                fontFamily: "Roboto, sans-serif",
-                fontWeight: 500,
-                fontSize: "12px",
-                lineHeight: 1.33,
-              }}
-            >
-              {popularity}
-            </Typography>
-          </Box>
-          <Box component="li" sx={s.item}>
-            <Typography component="span" sx={s.options}>
-              Original Title
-            </Typography>
-            <Typography
-              component="span"
-              sx={{
-                color: "common.black",
-                fontFamily: "Roboto, sans-serif",
-                fontWeight: 500,
-                fontSize: "12px",
-                lineHeight: 1.33,
-              }}
-            >
-              {filmTitle}
-            </Typography>
-          </Box>
-          <Box component="li" sx={{ ...s.item, mb: "0px" }}>
-            <Typography component="span" sx={s.options}>
-              Genre
-            </Typography>
-            <Typography
-              component="span"
-              sx={{
-                color: "common.black",
-                fontFamily: "Roboto, sans-serif",
-                fontWeight: 500,
-                fontSize: "12px",
-                lineHeight: 1.33,
-              }}
-            >
-              {genresNames}
-            </Typography>
-          </Box>
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
+      <Box component="div" sx={s.border}>
+        <Button
+          sx={{
+            position: "absolute",
+            top: "10px",
+            right: "10px",
+            minWidth: "15px",
+            minHeight: "15px",
+            padding: "0px",
+          }}
+          onClick={onClose}
+        >
+          <svg width="15px" height="15px">
+            <use href={`${sprite}#icon-cross`}></use>
+          </svg>
+        </Button>
+        <Box component="div" sx={s.imageWrapper}>
+          <Box component="img" src={poster} alt="img" sx={s.image} />
+          {youtubeVideo?.results.length !== 0 ? (
+            <>
+              {mode !== "" ? (
+                <Tooltip title="Close player" enterDelay={500} leaveDelay={200}>
+                  <Button
+                    onClick={() => handleClose()}
+                    sx={{
+                      position: "absolute",
+                      bottom: "9px",
+                      right: { xs: "40px", laptop: "80px" },
+                    }}
+                  >
+                    <CancelPresentationIcon
+                      fontSize="large"
+                      sx={{
+                        color: "#c00",
+                      }}
+                    />
+                  </Button>
+                </Tooltip>
+              ) : null}
+              <Tooltip title="Watch trailer" enterDelay={500} leaveDelay={200}>
+                <Button
+                  sx={{
+                    position: "absolute",
+                    bottom: "10px",
+                    right: { xs: "0px", laptop: "35px" },
+                  }}
+                  onClick={handleClick}
+                >
+                  <YouTubeIcon
+                    fontSize="large"
+                    sx={{
+                      color: "#c00",
+                    }}
+                  />
+                </Button>
+              </Tooltip>
+              <Menu
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+                transformOrigin={{
+                  vertical: "bottom",
+                  horizontal: "center",
+                }}
+                id="long-menu"
+                MenuListProps={{
+                  "aria-labelledby": "long-button",
+                }}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={() => handleClose()}
+                PaperProps={{
+                  style: {
+                    maxHeight: 48 * 4.5,
+                    maxWidth: "280px",
+                    minWidth: "100px",
+                  },
+                }}
+              >
+                {youtubeVideo?.results?.map(({ key, name }) => (
+                  <MenuItem key={key} onClick={() => handleClose(key)}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </>
+          ) : null}
         </Box>
-        <Typography
-          component="p"
-          sx={{
-            color: "common.black",
-            fontFamily: "Roboto, sans-serif",
-            fontWeight: 500,
-            fontSize: "12px",
-            lineHeight: 1.33,
-            textTransform: "uppercase",
-          }}
-        >
-          About
-        </Typography>
-        <Box
-          sx={{
-            mt: { xs: "10px" },
-            height: "125px",
-            overflow: "hidden",
-            overflowY: "auto",
-          }}
-        >
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <Typography component="h3" sx={s.title}>
+            {original_title}
+          </Typography>
+          <Box component="ul" sx={{ mb: { xs: "20px" } }}>
+            <Box component="li" sx={s.item}>
+              <Typography component="span" sx={s.options}>
+                Vote / Votes
+              </Typography>
+              <Typography
+                component="span"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "36px",
+                  height: "16px",
+                  backgroundColor: "custom.main",
+                  borderRadius: "5px",
+                  color: "common.white",
+                  fontFamily: "Roboto, sans-serif",
+                  fontWeight: 500,
+                  fontSize: "12px",
+                  lineHeight: 1.16,
+                  textAlign: "center",
+                }}
+              >
+                {rating}
+              </Typography>
+              <Typography
+                component="span"
+                sx={{
+                  ml: { xs: "3px" },
+                  mr: { xs: "3px" },
+                  color: "custom.params",
+                  fontFamily: "Roboto, sans-serif",
+                  fontWeight: 500,
+                  fontSize: "12px",
+                  lineHeight: 1.33,
+                }}
+              >
+                /
+              </Typography>
+              <Typography
+                component="span"
+                sx={{
+                  color: "common.black",
+                  fontFamily: "Roboto, sans-serif",
+                  fontWeight: 500,
+                  fontSize: "12px",
+                  lineHeight: 1.33,
+                }}
+              >
+                {vote_count}
+              </Typography>
+            </Box>
+            <Box component="li" sx={s.item}>
+              <Typography component="span" sx={s.options}>
+                Popularity
+              </Typography>
+              <Typography
+                component="span"
+                sx={{
+                  color: "common.black",
+                  fontFamily: "Roboto, sans-serif",
+                  fontWeight: 500,
+                  fontSize: "12px",
+                  lineHeight: 1.33,
+                }}
+              >
+                {popularity}
+              </Typography>
+            </Box>
+            <Box component="li" sx={s.item}>
+              <Typography component="span" sx={s.options}>
+                Original Title
+              </Typography>
+              <Typography
+                component="span"
+                sx={{
+                  color: "common.black",
+                  fontFamily: "Roboto, sans-serif",
+                  fontWeight: 500,
+                  fontSize: "12px",
+                  lineHeight: 1.33,
+                }}
+              >
+                {filmTitle}
+              </Typography>
+            </Box>
+            <Box component="li" sx={{ ...s.item, mb: "0px" }}>
+              <Typography component="span" sx={s.options}>
+                Genre
+              </Typography>
+              <Typography
+                component="span"
+                sx={{
+                  color: "common.black",
+                  fontFamily: "Roboto, sans-serif",
+                  fontWeight: 500,
+                  fontSize: "12px",
+                  lineHeight: 1.33,
+                }}
+              >
+                {genresNames}
+              </Typography>
+            </Box>
+          </Box>
           <Typography
             component="p"
             sx={{
@@ -225,46 +296,70 @@ const MovieModal: React.FC<IProps> = (props) => {
               fontFamily: "Roboto, sans-serif",
               fontWeight: 500,
               fontSize: "12px",
-              lineHeight: 1.66,
+              lineHeight: 1.33,
+              textTransform: "uppercase",
             }}
           >
-            {overview}
+            About
           </Typography>
-        </Box>
-        <Box
-          component="div"
-          sx={{
-            display: "flex",
-            mt: { xs: "20px" },
-            gap: { xs: "15px" },
-            justifyContent: { xs: "center", laptop: "start" },
-          }}
-        >
-          <ThemeProvider theme={s.button}>
-            <Button
-              variant="contained"
-              sx={{
-                minWidth: { xs: "110px" },
-                height: "45px",
-                color: "common.white",
-              }}
-            >
-              add to Watched
-            </Button>
-            <Button
-              variant="outlined"
+          <Box
+            sx={{
+              display: "flex",
+              mt: { xs: "10px" },
+              overflow: "hidden",
+              overflowY: "auto",
+              maxHeight: { xs: "100px", laptop: "250px" },
+            }}
+          >
+            <Typography
+              component="p"
               sx={{
                 color: "common.black",
-                borderColor: "common.black",
-                minWidth: { xs: "110px" },
-                height: "45px",
+                fontFamily: "Roboto, sans-serif",
+                fontWeight: 500,
+                fontSize: "12px",
+                lineHeight: 1.66,
               }}
             >
-              add to queue
-            </Button>
-          </ThemeProvider>
+              {overview}
+            </Typography>
+          </Box>
+          <Box
+            component="div"
+            sx={{
+              display: "flex",
+              mt: { xs: "20px", tablet: "auto" },
+              gap: { xs: "15px" },
+              justifyContent: { xs: "center", laptop: "start" },
+            }}
+          >
+            <ThemeProvider theme={s.button}>
+              <Button
+                variant="contained"
+                sx={{
+                  minWidth: { xs: "110px" },
+                  height: "45px",
+                  color: "common.white",
+                }}
+              >
+                add to Watched
+              </Button>
+              <Button
+                variant="outlined"
+                sx={{
+                  color: "common.black",
+                  borderColor: "common.black",
+                  minWidth: { xs: "110px" },
+                  height: "45px",
+                }}
+              >
+                add to queue
+              </Button>
+            </ThemeProvider>
+          </Box>
         </Box>
       </Box>
+      {mode !== "" ? <VideoPlayer movieId={mode} /> : null}
     </Box>
   );
 };
