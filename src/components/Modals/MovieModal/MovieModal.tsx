@@ -190,50 +190,13 @@ const MovieModal: React.FC<IProps> = (props) => {
               <Typography component="span" sx={s.options}>
                 Vote / Votes
               </Typography>
-              <Typography
-                component="span"
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "36px",
-                  height: "16px",
-                  backgroundColor: "custom.main",
-                  borderRadius: "5px",
-                  color: "common.white",
-                  fontFamily: "Roboto, sans-serif",
-                  fontWeight: 500,
-                  fontSize: "12px",
-                  lineHeight: 1.16,
-                  textAlign: "center",
-                }}
-              >
+              <Typography component="span" sx={s.rating}>
                 {rating}
               </Typography>
-              <Typography
-                component="span"
-                sx={{
-                  ml: { xs: "3px" },
-                  mr: { xs: "3px" },
-                  color: "custom.params",
-                  fontFamily: "Roboto, sans-serif",
-                  fontWeight: 500,
-                  fontSize: "12px",
-                  lineHeight: 1.33,
-                }}
-              >
+              <Typography component="span" sx={s.divider}>
                 /
               </Typography>
-              <Typography
-                component="span"
-                sx={{
-                  color: "common.black",
-                  fontFamily: "Roboto, sans-serif",
-                  fontWeight: 500,
-                  fontSize: "12px",
-                  lineHeight: 1.33,
-                }}
-              >
+              <Typography component="span" sx={s.voteCount}>
                 {vote_count}
               </Typography>
             </Box>
@@ -241,16 +204,7 @@ const MovieModal: React.FC<IProps> = (props) => {
               <Typography component="span" sx={s.options}>
                 Popularity
               </Typography>
-              <Typography
-                component="span"
-                sx={{
-                  color: "common.black",
-                  fontFamily: "Roboto, sans-serif",
-                  fontWeight: 500,
-                  fontSize: "12px",
-                  lineHeight: 1.33,
-                }}
-              >
+              <Typography component="span" sx={s.popularity}>
                 {popularity}
               </Typography>
             </Box>
@@ -258,16 +212,7 @@ const MovieModal: React.FC<IProps> = (props) => {
               <Typography component="span" sx={s.options}>
                 Original Title
               </Typography>
-              <Typography
-                component="span"
-                sx={{
-                  color: "common.black",
-                  fontFamily: "Roboto, sans-serif",
-                  fontWeight: 500,
-                  fontSize: "12px",
-                  lineHeight: 1.33,
-                }}
-              >
+              <Typography component="span" sx={s.filmTitle}>
                 {filmTitle}
               </Typography>
             </Box>
@@ -275,64 +220,20 @@ const MovieModal: React.FC<IProps> = (props) => {
               <Typography component="span" sx={s.options}>
                 Genre
               </Typography>
-              <Typography
-                component="span"
-                sx={{
-                  color: "common.black",
-                  fontFamily: "Roboto, sans-serif",
-                  fontWeight: 500,
-                  fontSize: "12px",
-                  lineHeight: 1.33,
-                }}
-              >
+              <Typography component="span" sx={s.genresNames}>
                 {genresNames}
               </Typography>
             </Box>
           </Box>
-          <Typography
-            component="p"
-            sx={{
-              color: "common.black",
-              fontFamily: "Roboto, sans-serif",
-              fontWeight: 500,
-              fontSize: "12px",
-              lineHeight: 1.33,
-              textTransform: "uppercase",
-            }}
-          >
+          <Typography component="p" sx={s.about}>
             About
           </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              mt: { xs: "10px" },
-              overflow: "hidden",
-              overflowY: "auto",
-              maxHeight: { xs: "100px", laptop: "250px" },
-            }}
-          >
-            <Typography
-              component="p"
-              sx={{
-                color: "common.black",
-                fontFamily: "Roboto, sans-serif",
-                fontWeight: 500,
-                fontSize: "12px",
-                lineHeight: 1.66,
-              }}
-            >
+          <Box sx={s.overviewWrapper}>
+            <Typography component="p" sx={s.overview}>
               {overview}
             </Typography>
           </Box>
-          <Box
-            component="div"
-            sx={{
-              display: "flex",
-              mt: { xs: "20px", tablet: "auto" },
-              gap: { xs: "15px" },
-              justifyContent: { xs: "center", laptop: "start" },
-            }}
-          >
+          <Box component="div" sx={s.buttonsWrapper}>
             <ThemeProvider theme={s.button}>
               <Button
                 variant="contained"

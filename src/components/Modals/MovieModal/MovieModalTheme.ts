@@ -54,6 +54,96 @@ const item = {
   minHeight: "5px",
 };
 
+const rating = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: "36px",
+  height: "16px",
+  backgroundColor: "custom.main",
+  borderRadius: "5px",
+  color: "common.white",
+  fontFamily: "Roboto, sans-serif",
+  fontWeight: 500,
+  fontSize: "12px",
+  lineHeight: 1.16,
+  textAlign: "center",
+};
+
+const divider = {
+  ml: { xs: "3px" },
+  mr: { xs: "3px" },
+  color: "custom.params",
+  fontFamily: "Roboto, sans-serif",
+  fontWeight: 500,
+  fontSize: "12px",
+  lineHeight: 1.33,
+};
+
+const voteCount = {
+  color: "common.black",
+  fontFamily: "Roboto, sans-serif",
+  fontWeight: 500,
+  fontSize: "12px",
+  lineHeight: 1.33,
+};
+
+const popularity = {
+  color: "common.black",
+  fontFamily: "Roboto, sans-serif",
+  fontWeight: 500,
+  fontSize: "12px",
+  lineHeight: 1.33,
+};
+
+const filmTitle = {
+  color: "common.black",
+  fontFamily: "Roboto, sans-serif",
+  fontWeight: 500,
+  fontSize: "12px",
+  lineHeight: 1.33,
+};
+
+const genresNames = {
+  color: "common.black",
+  fontFamily: "Roboto, sans-serif",
+  fontWeight: 500,
+  fontSize: "12px",
+  lineHeight: 1.33,
+};
+
+const about = {
+  color: "common.black",
+  fontFamily: "Roboto, sans-serif",
+  fontWeight: 500,
+  fontSize: "12px",
+  lineHeight: 1.33,
+  textTransform: "uppercase",
+};
+
+const overviewWrapper = {
+  display: "flex",
+  mt: { xs: "10px" },
+  overflow: "hidden",
+  overflowY: "auto",
+  maxHeight: { xs: "100px", laptop: "250px" },
+};
+
+const overview = {
+  color: "common.black",
+  fontFamily: "Roboto, sans-serif",
+  fontWeight: 500,
+  fontSize: "12px",
+  lineHeight: 1.66,
+};
+
+const buttonsWrapper = {
+  display: "flex",
+  mt: { xs: "20px", tablet: "auto" },
+  gap: { xs: "15px" },
+  justifyContent: { xs: "center", laptop: "start" },
+};
+
 export const button = createTheme({
   palette: {
     primary: {
@@ -77,4 +167,21 @@ export const button = createTheme({
   },
 });
 
-export { image, title, options, border, item, imageWrapper };
+export {
+  buttonsWrapper,
+  overview,
+  overviewWrapper,
+  about,
+  genresNames,
+  filmTitle,
+  popularity,
+  voteCount,
+  divider,
+  image,
+  title,
+  options,
+  border,
+  item,
+  imageWrapper,
+  rating,
+};
