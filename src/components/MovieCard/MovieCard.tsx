@@ -17,10 +17,9 @@ let allGenres: { id: number; name: string }[];
 })();
 
 interface IProps {
-  key: number;
   data: {
     id: number;
-    poster_path: string;
+    poster_path?: string;
     name: string;
     overview: string;
     vote_average: number;
@@ -36,6 +35,7 @@ interface IProps {
 
 const MovieCard: React.FC<IProps> = ({ data }) => {
   const {
+    id,
     poster_path,
     name,
     original_name,
@@ -44,6 +44,8 @@ const MovieCard: React.FC<IProps> = ({ data }) => {
     title,
     genre_ids,
   } = data;
+
+  console.log(id);
 
   const poster = poster_path
     ? `https://image.tmdb.org/t/p/w500${poster_path}`

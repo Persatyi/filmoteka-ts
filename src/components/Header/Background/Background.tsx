@@ -3,7 +3,7 @@ import React from "react";
 import { CardMedia } from "@mui/material";
 
 interface IProps {
-  type: 0 | 1;
+  type: Number;
 }
 
 const Background: React.FC<IProps> = (props) => {

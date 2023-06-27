@@ -55,7 +55,7 @@ const Home: React.FC = () => {
               gap={{ xs: 0, tablet: 2 }}
               sx={{ justifyItems: { mobile: "center" } }}
             >
-              {data.results.map((element: { id: number }) => (
+              {data.results.map((element) => (
                 <Box
                   gridColumn="span 1"
                   key={element.id}
@@ -96,7 +96,7 @@ const Home: React.FC = () => {
               gap={{ xs: 0, tablet: 2 }}
               sx={{ justifyItems: { mobile: "center" } }}
             >
-              {searchData.results.map((element: { id: number }) => (
+              {searchData.results.map((element) => (
                 <Box
                   gridColumn="span 1"
                   key={element.id}

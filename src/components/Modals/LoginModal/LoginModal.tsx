@@ -17,7 +17,9 @@ const LoginModal: React.FC<IProps> = ({ onClose }) => {
         background: "#fff",
       }}
     >
-      <Typography>Login</Typography>
+      <Typography component={"h3"} sx={{ color: "#000" }}>
+        Login
+      </Typography>
     </Box>
   );
 };
