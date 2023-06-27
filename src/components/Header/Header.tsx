@@ -5,6 +5,7 @@ import { Box } from "@mui/material";
 import Background from "./Background";
 import Container from "components/Container";
 import Navigation from "./Navigation";
+import RegistrationField from "./RegistrationField";
 
 const Header = () => {
   const { pathname } = useLocation();
@@ -24,6 +25,7 @@ const Header = () => {
         <Background type={value} />
         <Container>
           <Navigation update={setValue} />
+          <RegistrationField />
         </Container>
       </Box>
     </>

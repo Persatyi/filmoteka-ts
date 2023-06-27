@@ -3,7 +3,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { Root, theme } from "./theme";
 
 interface IPropsType {
-  children?: JSX.Element;
+  children?: JSX.Element | JSX.Element[];
 }
 
 const Container: React.FC<IPropsType> = (props) => {
