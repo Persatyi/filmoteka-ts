@@ -35,7 +35,6 @@ interface IProps {
 
 const MovieCard: React.FC<IProps> = ({ data }) => {
   const {
-    id,
     poster_path,
     name,
     original_name,
@@ -44,8 +43,6 @@ const MovieCard: React.FC<IProps> = ({ data }) => {
     title,
     genre_ids,
   } = data;
-
-  console.log(id);
 
   const poster = poster_path
     ? `https://image.tmdb.org/t/p/w500${poster_path}`
