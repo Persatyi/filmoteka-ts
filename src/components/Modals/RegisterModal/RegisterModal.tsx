@@ -1,16 +1,16 @@
 import React from "react";
 import { Box, Typography, Button, TextField } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import LoginIcon from "@mui/icons-material/Login";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
 
-import * as s from "./LoginModalTheme";
+import * as s from "./RegisterModalTheme";
 import sprite from "assets/images/Sprite/sprite.svg";
 
 interface IProps {
   onClose: Function;
 }
 
-const LoginModal: React.FC<IProps> = ({ onClose }) => {
+const RegisterModal: React.FC<IProps> = ({ onClose }) => {
   return (
     <Box
       sx={{
@@ -40,12 +40,12 @@ const LoginModal: React.FC<IProps> = ({ onClose }) => {
         </svg>
       </Button>
       <Typography align="center" component={"h3"} sx={s.title}>
-        Login
+        Registaration
       </Typography>
       <ThemeProvider theme={s.theme}>
         <TextField
           sx={s.input}
-          id="standard-basic1"
+          id="standard-basic3"
           label="Email"
           variant="outlined"
           type="email"
@@ -57,7 +57,7 @@ const LoginModal: React.FC<IProps> = ({ onClose }) => {
         />
         <TextField
           sx={s.input}
-          id="standard-basic2"
+          id="standard-basic4"
           label="Password"
           variant="outlined"
           type="password"
@@ -68,12 +68,25 @@ const LoginModal: React.FC<IProps> = ({ onClose }) => {
           // value={value}
           // onChange={(event) => setValue(event.target.value)}
         />
-        <Button fullWidth size="large" startIcon={<LoginIcon />}>
-          Sign in
+        <TextField
+          sx={s.input}
+          id="standard-basic5"
+          label="Confirm password"
+          variant="outlined"
+          type="password"
+          fullWidth
+          color="primary"
+          required
+          autoComplete=""
+          // value={value}
+          // onChange={(event) => setValue(event.target.value)}
+        />
+        <Button fullWidth size="large" startIcon={<HowToRegIcon />}>
+          Sign up
         </Button>
       </ThemeProvider>
     </Box>
   );
 };
 
-export default LoginModal;
+export default RegisterModal;
