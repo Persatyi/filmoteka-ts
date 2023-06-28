@@ -1,6 +1,15 @@
 import { createTheme } from "@mui/material/styles";
 
 export const theme = createTheme({
+  components: {
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          marginTop: "0px",
+        },
+      },
+    },
+  },
   palette: {
     primary: {
       main: "#ff6b08",
@@ -26,11 +35,11 @@ const input = {
 };
 
 const errorMessage = {
-  color: "common.black",
+  position: "absolute",
   fontFamily: "Roboto, sans-serif",
   fontWeight: 500,
   lineHeight: 1.15,
-  fontSize: "8px",
+  fontSize: "10px",
 };
 
 export { title, input, errorMessage };

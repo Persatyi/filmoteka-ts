@@ -1,6 +1,15 @@
 import { createTheme } from "@mui/material/styles";
 
 export const theme = createTheme({
+  components: {
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          marginTop: "0px",
+        },
+      },
+    },
+  },
   palette: {
     primary: {
       main: "#ff6b08",
