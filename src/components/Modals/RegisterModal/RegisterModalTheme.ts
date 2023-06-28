@@ -22,7 +22,15 @@ const title = {
 };
 
 const input = {
-  mb: { xs: "10px" },
+  mb: { xs: "20px" },
 };
 
-export { title, input };
+const errorMessage = {
+  color: "common.black",
+  fontFamily: "Roboto, sans-serif",
+  fontWeight: 500,
+  lineHeight: 1.15,
+  fontSize: "8px",
+};
+
+export { title, input, errorMessage };
