@@ -6,6 +6,7 @@ import Background from "./Background";
 import Container from "components/Container";
 import Navigation from "./Navigation";
 import RegistrationField from "./RegistrationField";
+import UserDisplay from "./UserDisplay/UserDisplay";
 
 const Header = () => {
   const { pathname } = useLocation();
@@ -24,6 +25,7 @@ const Header = () => {
       >
         <Background type={value} />
         <Container>
+          <UserDisplay />
           <Navigation update={setValue} />
           <RegistrationField />
         </Container>

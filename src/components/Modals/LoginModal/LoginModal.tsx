@@ -3,7 +3,9 @@ import { Box, Typography, Button, TextField } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import LoginIcon from "@mui/icons-material/Login";
 import { Formik } from "formik";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
+import { auth } from "services/firebase";
 import { ValidationLogin } from "assets/schemas/authSchemas";
 
 import * as s from "./LoginModalTheme";
@@ -14,12 +16,25 @@ interface IProps {
 }
 
 const LoginModal: React.FC<IProps> = ({ onClose }) => {
+  const loginHeandler = async (properties: {
+    email: string;
+    password: string;
+  }) => {
+    const { email, password } = properties;
+    try {
+      const user = await signInWithEmailAndPassword(auth, email, password);
+      console.log("🚀 ~ user:", user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
       validateOnBlur
-      onSubmit={() => {
-        console.log("Submit");
+      onSubmit={({ email, password }) => {
+        loginHeandler({ email, password });
       }}
       validationSchema={ValidationLogin}
     >

@@ -3,7 +3,9 @@ import { Box, Typography, Button, TextField } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import { Formik } from "formik";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
+import { auth } from "../../../services/firebase";
 import { ValidationsReg } from "assets/schemas/authSchemas";
 
 import * as s from "./RegisterModalTheme";
@@ -14,6 +16,30 @@ interface IProps {
 }
 
 const RegisterModal: React.FC<IProps> = ({ onClose }) => {
+  const registerHeandler = async (properties: {
+    email: string;
+    password: string;
+    username: string;
+  }) => {
+    const { email, password, username } = properties;
+    try {
+      const user = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      ).catch((err) => console.log(err));
+      console.log("🚀 ~ user:", user);
+
+      if (auth.currentUser) {
+        await updateProfile(auth.currentUser, {
+          displayName: username,
+        }).catch((err) => console.log(err));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Formik
       initialValues={{
@@ -23,8 +49,8 @@ const RegisterModal: React.FC<IProps> = ({ onClose }) => {
         confirmPassword: "",
       }}
       validateOnBlur
-      onSubmit={() => {
-        console.log("Submit");
+      onSubmit={({ email, password, username }) => {
+        registerHeandler({ email, password, username });
       }}
       validationSchema={ValidationsReg}
     >
@@ -46,6 +72,7 @@ const RegisterModal: React.FC<IProps> = ({ onClose }) => {
             padding: "30px",
           }}
           component="form"
+          onSubmit={handleSubmit}
         >
           <Button
             sx={{

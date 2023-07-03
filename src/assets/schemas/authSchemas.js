@@ -38,7 +38,7 @@ const ValidationsReg = yup.object().shape({
   email: yup
     .string()
     .required("Email is required")
-    .min("Email must be at least 10 characters")
+    .min(10, "Email must be at least 10 characters")
     .max(63, "Email must not contain more than 63 characters")
     .test(
       "is-valid",
