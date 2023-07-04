@@ -1,8 +1,7 @@
 const user = {
   display: { xs: "none", mobile: "flex" },
-  alignItems: "baseline",
   fontFamily: "Roboto, sans-serif",
-  fontSize: 30,
+  fontSize: 15,
   lineHeight: 1.16,
   fontWeight: 500,
   letterSpacing: ".01rem",

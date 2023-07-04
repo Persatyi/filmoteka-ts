@@ -7,6 +7,8 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { auth } from "services/firebase";
 import { ValidationLogin } from "assets/schemas/authSchemas";
+import { useAppDispatch } from "hooks/hooks";
+import { setUser } from "redux/userSlice";
 
 import * as s from "./LoginModalTheme";
 import sprite from "assets/images/Sprite/sprite.svg";
@@ -16,14 +18,30 @@ interface IProps {
 }
 
 const LoginModal: React.FC<IProps> = ({ onClose }) => {
+  const dispatch = useAppDispatch();
+
   const loginHeandler = async (properties: {
     email: string;
     password: string;
   }) => {
     const { email, password } = properties;
     try {
-      const user = await signInWithEmailAndPassword(auth, email, password);
-      console.log("🚀 ~ user:", user);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      if (userCredential) {
+        dispatch(
+          setUser({
+            email: userCredential.user.email,
+            token: "",
+            id: userCredential.user.uid,
+            name: userCredential.user.displayName,
+          })
+        );
+      }
     } catch (error) {
       console.log(error);
     }

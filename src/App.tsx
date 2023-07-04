@@ -9,6 +9,7 @@ import Home from "pages/Home";
 import Library from "pages/Library";
 import Queue from "./pages/Queue/Queue";
 import NotFoundPage from "pages/NotFoundPage";
+import PrivateRoute from "components/PrivateRoute/PrivateRoute";
 
 const App: React.FC = () => {
   const { data, error } = useGetGenresQuery();
@@ -26,8 +27,22 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="library" element={<Library />} />
-          <Route path="queue" element={<Queue />} />
+          <Route
+            path="library"
+            element={
+              <PrivateRoute>
+                <Library />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="queue"
+            element={
+              <PrivateRoute>
+                <Queue />
+              </PrivateRoute>
+            }
+          />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

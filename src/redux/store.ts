@@ -2,11 +2,13 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import type { PreloadedState } from "@reduxjs/toolkit";
 import { moviesApi } from "services/APIService";
 import { dataReducer } from "./dataSlice/dataSlice";
+import { userReducer } from "./userSlice/userSlice";
 
 const rootReducer = combineReducers({
   // Add the generated reducer as a specific top-level slice
   [moviesApi.reducerPath]: moviesApi.reducer,
   dataReducer,
+  userReducer,
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {

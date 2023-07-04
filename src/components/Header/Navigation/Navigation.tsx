@@ -6,11 +6,14 @@ import SwipeableViews from "react-swipeable-views";
 
 import * as s from "./NavigationTheme";
 import sprite from "assets/images/Sprite/sprite.svg";
+import UserDisplay from "components/Header/UserDisplay/UserDisplay";
 
 import SearchField from "../SearchField";
+import RegistrationField from "../RegistrationField";
 import Buttons from "../Buttons";
 
 import { useAppDispatch } from "hooks/hooks";
+import { useAuth } from "hooks/useAuth";
 import { setPopular } from "redux/dataSlice/dataSlice";
 
 interface TabPanelProps {
@@ -58,6 +61,8 @@ const Navigation: React.FC<IProps> = ({ update }) => {
   const dispatch = useAppDispatch();
 
   const theme = useTheme();
+
+  const { isAuth } = useAuth();
 
   const routeMatch = useRouteMatch(["/", "/library"]);
   const currentTab = routeMatch?.pattern?.path;
@@ -114,32 +119,39 @@ const Navigation: React.FC<IProps> = ({ update }) => {
             onClick={() => handleChangeIndex(0)}
           />
 
-          <Tabs
-            onChange={handleChange}
-            value={value}
-            sx={{ ml: "auto", minHeight: "0px" }}
-            textColor="inherit"
-            TabIndicatorProps={{
-              style: { background: "#ff6b08" },
-            }}
-          >
-            <Tab
-              label="Home"
-              disableRipple
-              value={0}
-              to="/"
-              component={Link}
-              sx={{ ...s.tab, mr: "40px" }}
-            />
-            <Tab
-              label="My library"
-              disableRipple
-              value={1}
-              to="library"
-              component={Link}
-              sx={s.tab}
-            />
-          </Tabs>
+          {isAuth ? (
+            <>
+              <Tabs
+                onChange={handleChange}
+                value={value}
+                sx={{ ml: "auto", minHeight: "0px" }}
+                textColor="inherit"
+                TabIndicatorProps={{
+                  style: { background: "#ff6b08" },
+                }}
+              >
+                <Tab
+                  label="Home"
+                  disableRipple
+                  value={0}
+                  to="/"
+                  component={Link}
+                  sx={{ ...s.tab, mr: "40px" }}
+                />
+                <Tab
+                  label="My library"
+                  disableRipple
+                  value={1}
+                  to="library"
+                  component={Link}
+                  sx={s.tab}
+                />
+              </Tabs>
+              <UserDisplay />
+            </>
+          ) : (
+            <RegistrationField />
+          )}
         </Toolbar>
       </AppBar>
       <SwipeableViews

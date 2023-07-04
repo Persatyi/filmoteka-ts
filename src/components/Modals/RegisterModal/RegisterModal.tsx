@@ -5,8 +5,10 @@ import HowToRegIcon from "@mui/icons-material/HowToReg";
 import { Formik } from "formik";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
-import { auth } from "../../../services/firebase";
+import { auth } from "services/firebase";
 import { ValidationsReg } from "assets/schemas/authSchemas";
+import { useAppDispatch } from "hooks/hooks";
+import { setUser } from "redux/userSlice";
 
 import * as s from "./RegisterModalTheme";
 import sprite from "assets/images/Sprite/sprite.svg";
@@ -16,6 +18,8 @@ interface IProps {
 }
 
 const RegisterModal: React.FC<IProps> = ({ onClose }) => {
+  const dispatch = useAppDispatch();
+
   const registerHeandler = async (properties: {
     email: string;
     password: string;
@@ -23,17 +27,28 @@ const RegisterModal: React.FC<IProps> = ({ onClose }) => {
   }) => {
     const { email, password, username } = properties;
     try {
-      const user = await createUserWithEmailAndPassword(
+      const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       ).catch((err) => console.log(err));
-      console.log("🚀 ~ user:", user);
+      console.log("🚀 ~ userCredential:", userCredential);
 
       if (auth.currentUser) {
         await updateProfile(auth.currentUser, {
           displayName: username,
         }).catch((err) => console.log(err));
+      }
+
+      if (userCredential) {
+        dispatch(
+          setUser({
+            email: userCredential.user.email,
+            token: "",
+            id: userCredential.user.uid,
+            name: userCredential.user.displayName,
+          })
+        );
       }
     } catch (err) {
       console.log(err);
