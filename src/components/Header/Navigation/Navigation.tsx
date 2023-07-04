@@ -147,10 +147,14 @@ const Navigation: React.FC<IProps> = ({ update }) => {
                   sx={s.tab}
                 />
               </Tabs>
-              <UserDisplay />
+              <Box component="div" sx={{ ml: "40px" }}>
+                <UserDisplay />
+              </Box>
             </>
           ) : (
-            <RegistrationField />
+            <Box component="div" sx={{ ml: "auto" }}>
+              <RegistrationField />
+            </Box>
           )}
         </Toolbar>
       </AppBar>
@@ -162,9 +166,13 @@ const Navigation: React.FC<IProps> = ({ update }) => {
         <TabPanel value={value} index={0} dir={theme.direction}>
           <SearchField />
         </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          <Buttons />
-        </TabPanel>
+        {isAuth ? (
+          <TabPanel value={value} index={1} dir={theme.direction}>
+            <Buttons />
+          </TabPanel>
+        ) : (
+          <></>
+        )}
       </SwipeableViews>
     </>
   );

@@ -1,10 +1,12 @@
 import React from "react";
+import { redirect } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Menu, MenuItem, Button, Box } from "@mui/material";
 import { signOut } from "firebase/auth";
 
 import { auth } from "services/firebase";
 import { removeUser } from "redux/userSlice";
+import { useAppDispatch } from "hooks/hooks";
 
 import { useAuth } from "hooks/useAuth";
 
@@ -12,6 +14,8 @@ import { useAuth } from "hooks/useAuth";
 
 const UserDisplay = () => {
   const { name } = useAuth();
+
+  const dispatch = useAppDispatch();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -28,7 +32,8 @@ const UserDisplay = () => {
     signOut(auth)
       .then(() => {
         setAnchorEl(null);
-        removeUser();
+        dispatch(removeUser());
+        redirect("/");
       })
       .catch((error) => {
         console.log(error);
