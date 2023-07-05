@@ -1,15 +1,12 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 import { CardMedia } from "@mui/material";
 
-interface IProps {
-  type: Number;
-}
+const Background = () => {
+  const { pathname } = useLocation();
 
-const Background: React.FC<IProps> = (props) => {
-  const { type } = props;
-
-  if (type === 0) {
+  if (pathname === "/") {
     return (
       <CardMedia
         component="picture"

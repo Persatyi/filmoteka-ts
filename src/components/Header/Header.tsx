@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
 
 import Background from "./Background";
@@ -7,9 +5,6 @@ import Container from "components/Container";
 import Navigation from "./Navigation";
 
 const Header = () => {
-  const { pathname } = useLocation();
-  const [value, setValue] = useState(pathname === "/" ? 0 : 1);
-
   return (
     <>
       <Box
@@ -21,9 +16,9 @@ const Header = () => {
           width: "100%",
         }}
       >
-        <Background type={value} />
+        <Background />
         <Container>
-          <Navigation update={setValue} />
+          <Navigation />
         </Container>
       </Box>
     </>

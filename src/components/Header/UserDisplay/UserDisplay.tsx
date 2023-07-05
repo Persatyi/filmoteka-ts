@@ -32,7 +32,7 @@ const UserDisplay = () => {
     signOut(auth)
       .then(() => {
         setAnchorEl(null);
-        dispatch(removeUser());
+        // dispatch(removeUser());
         redirect("/");
       })
       .catch((error) => {

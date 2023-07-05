@@ -53,11 +53,7 @@ function useRouteMatch(patterns: readonly string[]) {
   return null;
 }
 
-interface IProps {
-  update: (value: number) => void;
-}
-
-const Navigation: React.FC<IProps> = ({ update }) => {
+const Navigation = () => {
   const dispatch = useAppDispatch();
 
   const theme = useTheme();
@@ -70,12 +66,10 @@ const Navigation: React.FC<IProps> = ({ update }) => {
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-    update(newValue);
   };
 
   const handleChangeIndex = (index: number) => {
     setValue(index);
-    update(index);
     dispatch(setPopular());
   };
 
