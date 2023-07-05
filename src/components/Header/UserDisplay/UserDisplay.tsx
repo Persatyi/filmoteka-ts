@@ -32,6 +32,11 @@ const UserDisplay = () => {
     signOut(auth)
       .then(() => {
         setAnchorEl(null);
+
+        // Цей діспатч не потрібен оскільки firebase надає свій функціонал який відслідковує чи
+        // юзер розлогінився, коли це відбувається спрацьовує інструкція яка описана App.tsx
+        // в onAuthStateChanged
+
         // dispatch(removeUser());
         redirect("/");
       })
@@ -43,15 +48,26 @@ const UserDisplay = () => {
   return (
     <Box component="div">
       <Button
-        sx={{ display: "flex", alignItems: "center" }}
+        sx={{
+          color: "primary.contrastText",
+          fontFamily: "Roboto, sans-serif",
+          fontWeight: 500,
+          fontSize: 12,
+          lineHeight: 1.16,
+        }}
+        style={{ backgroundColor: "transparent" }}
+        variant="text"
+        disableElevation
+        disableRipple
+        disableFocusRipple
         onClick={handleClick}
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
+        endIcon={<AccountCircleIcon sx={{ width: "28px", height: "28px" }} />}
       >
         {name}
-        <AccountCircleIcon sx={{ width: "30px", height: "30px" }} />
       </Button>
       <Menu
         id="basic-menu"
