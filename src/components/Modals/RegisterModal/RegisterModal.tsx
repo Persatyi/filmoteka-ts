@@ -32,7 +32,6 @@ const RegisterModal: React.FC<IProps> = ({ onClose }) => {
         email,
         password
       ).catch((err) => console.log(err));
-      console.log("🚀 ~ userCredential:", userCredential);
 
       if (auth.currentUser) {
         await updateProfile(auth.currentUser, {
@@ -44,7 +43,6 @@ const RegisterModal: React.FC<IProps> = ({ onClose }) => {
         dispatch(
           setUser({
             email: userCredential.user.email,
-            token: "",
             id: userCredential.user.uid,
             name: userCredential.user.displayName,
           })

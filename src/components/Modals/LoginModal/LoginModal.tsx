@@ -36,7 +36,6 @@ const LoginModal: React.FC<IProps> = ({ onClose }) => {
         dispatch(
           setUser({
             email: userCredential.user.email,
-            token: "",
             id: userCredential.user.uid,
             name: userCredential.user.displayName,
           })

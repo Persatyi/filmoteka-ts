@@ -11,6 +11,7 @@ import VideoPlayer from "components/VideoPlayer";
 
 import { get, genresKey } from "localStorage/localStorage";
 import { useGetVideoQuery } from "services/APIService";
+import { useAuth } from "hooks/useAuth";
 
 let allGenres: { id: number; name: string }[];
 
@@ -41,6 +42,8 @@ interface IProps {
 
 const MovieModal: React.FC<IProps> = (props) => {
   const { onClose, id, data } = props;
+
+  const { isAuth } = useAuth();
 
   const [mode, setMode] = useState("");
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -233,31 +236,33 @@ const MovieModal: React.FC<IProps> = (props) => {
               {overview}
             </Typography>
           </Box>
-          <Box component="div" sx={s.buttonsWrapper}>
-            <ThemeProvider theme={s.button}>
-              <Button
-                variant="contained"
-                sx={{
-                  minWidth: { xs: "110px" },
-                  height: "45px",
-                  color: "common.white",
-                }}
-              >
-                add to Watched
-              </Button>
-              <Button
-                variant="outlined"
-                sx={{
-                  color: "common.black",
-                  borderColor: "common.black",
-                  minWidth: { xs: "110px" },
-                  height: "45px",
-                }}
-              >
-                add to queue
-              </Button>
-            </ThemeProvider>
-          </Box>
+          {isAuth ? (
+            <Box component="div" sx={s.buttonsWrapper}>
+              <ThemeProvider theme={s.button}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    minWidth: { xs: "110px" },
+                    height: "45px",
+                    color: "common.white",
+                  }}
+                >
+                  add to Watched
+                </Button>
+                <Button
+                  variant="outlined"
+                  sx={{
+                    color: "common.black",
+                    borderColor: "common.black",
+                    minWidth: { xs: "110px" },
+                    height: "45px",
+                  }}
+                >
+                  add to queue
+                </Button>
+              </ThemeProvider>
+            </Box>
+          ) : null}
         </Box>
       </Box>
       {mode !== "" ? <VideoPlayer movieId={mode} /> : null}
