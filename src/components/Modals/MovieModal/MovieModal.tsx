@@ -4,6 +4,13 @@ import { ThemeProvider } from "@mui/material/styles";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 import Tooltip from "@mui/material/Tooltip";
+import {
+  doc,
+  arrayUnion,
+  updateDoc,
+  getDoc,
+  arrayRemove,
+} from "firebase/firestore";
 
 import * as s from "./MovieModalTheme";
 import sprite from "assets/images/Sprite/sprite.svg";
@@ -12,6 +19,7 @@ import VideoPlayer from "components/VideoPlayer";
 import { get, genresKey } from "localStorage/localStorage";
 import { useGetVideoQuery } from "services/APIService";
 import { useAuth } from "hooks/useAuth";
+import { db } from "services/firebase";
 
 let allGenres: { id: number; name: string }[];
 
@@ -38,12 +46,17 @@ interface IProps {
   onClose: () => void;
   id: number;
   data: IData[];
+  isQueue?: boolean | undefined;
+  isWatched?: boolean | undefined;
 }
 
 const MovieModal: React.FC<IProps> = (props) => {
-  const { onClose, id, data } = props;
+  const { onClose, id, data, isQueue, isWatched } = props;
 
-  const { isAuth } = useAuth();
+  const [watchedList, setWatchedList] = useState<boolean>(false);
+  const [queueList, setQueueList] = useState<boolean>(false);
+
+  const { isAuth, id: userId } = useAuth();
 
   const [mode, setMode] = useState("");
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -61,6 +74,50 @@ const MovieModal: React.FC<IProps> = (props) => {
   const { data: youtubeVideo } = useGetVideoQuery(id);
 
   const movie: IData = data.find((el) => el.id === id)!;
+
+  if (!isQueue && !isWatched) {
+    const docRef = doc(db, "users", `${userId}`);
+    getDoc(docRef).then((res) => {
+      const list = res.data();
+      if (list) {
+        const inQueue = list.queue.find((el: { id: number }) => el.id === id);
+        if (inQueue) {
+          setQueueList(true);
+        }
+        const inWatched = list.watched.find(
+          (el: { id: number }) => el.id === id
+        );
+        if (inWatched) {
+          setWatchedList(true);
+        }
+      }
+    });
+  }
+
+  const addToQueue = async () => {
+    await updateDoc(doc(db, "users", `${userId}`), {
+      queue: arrayUnion(movie),
+    });
+    setQueueList(true);
+  };
+
+  const addToWatched = async () => {
+    await updateDoc(doc(db, "users", `${userId}`), {
+      watched: arrayUnion(movie),
+    });
+    setWatchedList(true);
+  };
+
+  const removeFromQueue = async () => {
+    await updateDoc(doc(db, "users", `${userId}`), {
+      queue: arrayRemove(movie),
+    });
+  };
+
+  const removeFromWatched = async () => {
+    console.log("removeFromWatched");
+  };
+
   const {
     overview,
     vote_average,
@@ -246,8 +303,13 @@ const MovieModal: React.FC<IProps> = (props) => {
                     height: "45px",
                     color: "common.white",
                   }}
+                  onClick={
+                    isWatched || watchedList ? removeFromWatched : addToWatched
+                  }
                 >
-                  add to Watched
+                  {isWatched || watchedList
+                    ? "remove from Watched"
+                    : "add to Watched"}
                 </Button>
                 <Button
                   variant="outlined"
@@ -257,8 +319,9 @@ const MovieModal: React.FC<IProps> = (props) => {
                     minWidth: { xs: "110px" },
                     height: "45px",
                   }}
+                  onClick={isQueue || queueList ? removeFromQueue : addToQueue}
                 >
-                  add to queue
+                  {isQueue || queueList ? "remove from queue" : "add to queue"}
                 </Button>
               </ThemeProvider>
             </Box>

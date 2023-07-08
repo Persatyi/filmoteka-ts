@@ -4,8 +4,10 @@ import { ThemeProvider } from "@mui/material/styles";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import { Formik } from "formik";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 import { auth } from "services/firebase";
+import { db } from "services/firebase";
 import { ValidationsReg } from "assets/schemas/authSchemas";
 import { useAppDispatch } from "hooks/hooks";
 import { setUser } from "redux/userSlice";
@@ -47,6 +49,10 @@ const RegisterModal: React.FC<IProps> = ({ onClose }) => {
             name: userCredential.user.displayName,
           })
         );
+        await setDoc(doc(db, "users", `${userCredential.user.uid}`), {
+          queue: [],
+          watched: [],
+        });
       }
     } catch (err) {
       console.log(err);

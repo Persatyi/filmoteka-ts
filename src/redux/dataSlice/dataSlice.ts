@@ -4,12 +4,14 @@ interface IInitialData {
   mode: "search" | "popular";
   page: number;
   query: string;
+  isLoading: boolean;
 }
 
 const initialState = {
   mode: "popular",
   page: 1,
   query: "",
+  isLoading: false,
 } as IInitialData;
 
 const dataSlice = createSlice({
@@ -29,9 +31,12 @@ const dataSlice = createSlice({
     setPage(state, { payload }) {
       state.page = payload;
     },
+    setLoader(state, { payload }) {
+      state.isLoading = payload;
+    },
   },
 });
 
-export const { setSearch, setPopular, setPage } = dataSlice.actions;
+export const { setSearch, setPopular, setPage, setLoader } = dataSlice.actions;
 
 export const dataReducer = dataSlice.reducer;

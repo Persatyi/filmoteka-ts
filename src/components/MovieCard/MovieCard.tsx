@@ -19,8 +19,8 @@ let allGenres: { id: number; name: string }[];
 interface IProps {
   data: {
     id: number;
-    poster_path?: string;
-    name: string;
+    poster_path?: string | undefined;
+    name?: string | undefined;
     overview: string;
     vote_average: number;
     popularity: number;
@@ -28,7 +28,7 @@ interface IProps {
     vote_count: number;
     first_air_date: string;
     release_date: string;
-    title: string;
+    title?: string | undefined;
     genre_ids: number[];
   };
 }
