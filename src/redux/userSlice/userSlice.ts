@@ -4,12 +4,14 @@ interface IInitialState {
   email: string | null;
   id: string | null;
   name: string | null;
+  userLoading: boolean;
 }
 
 const initialState = {
   email: null,
   id: null,
   name: null,
+  userLoading: false,
 } as IInitialState;
 
 const userSlice = createSlice({
@@ -26,9 +28,12 @@ const userSlice = createSlice({
       state.id = null;
       state.name = null;
     },
+    setUserLoader(state, { payload }) {
+      state.userLoading = payload;
+    },
   },
 });
 
-export const { setUser, removeUser } = userSlice.actions;
+export const { setUser, removeUser, setUserLoader } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;

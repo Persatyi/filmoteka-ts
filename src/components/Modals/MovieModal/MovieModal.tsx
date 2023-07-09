@@ -15,6 +15,7 @@ import {
 import * as s from "./MovieModalTheme";
 import sprite from "assets/images/Sprite/sprite.svg";
 import VideoPlayer from "components/VideoPlayer";
+import ButtonLoader from "components/ButtonLoader/ButtonLoader";
 
 import { get, genresKey } from "localStorage/localStorage";
 import { useGetVideoQuery } from "services/APIService";
@@ -53,6 +54,10 @@ interface IProps {
 const MovieModal: React.FC<IProps> = (props) => {
   const { onClose, id, data, isQueue, isWatched } = props;
 
+  const [queueLoader, setQueueLoader] = useState<boolean>(false);
+  const [watchedLoader, setWatchedLoader] = useState<boolean>(false);
+  const timer = React.useRef<number>();
+
   const [watchedList, setWatchedList] = useState<boolean>(false);
   const [queueList, setQueueList] = useState<boolean>(false);
 
@@ -61,6 +66,12 @@ const MovieModal: React.FC<IProps> = (props) => {
   const open = Boolean(anchorEl);
 
   const { isAuth, id: userId } = useAuth();
+
+  React.useEffect(() => {
+    return () => {
+      clearTimeout(timer.current);
+    };
+  }, []);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -105,32 +116,67 @@ const MovieModal: React.FC<IProps> = (props) => {
   }
 
   const addToQueue = async () => {
+    setQueueLoader(true);
     await updateDoc(doc(db, "users", `${userId}`), {
       queue: arrayUnion(movie),
     });
-    setQueueList(true);
+    timer.current = window.setTimeout(() => {
+      setQueueLoader(false);
+      setQueueList(true);
+    }, 2000);
   };
 
   const addToWatched = async () => {
+    setWatchedLoader(true);
     await updateDoc(doc(db, "users", `${userId}`), {
       watched: arrayUnion(movie),
     });
-    setWatchedList(true);
+    timer.current = window.setTimeout(() => {
+      setWatchedLoader(false);
+      setWatchedList(true);
+    }, 2000);
   };
 
   const removeFromQueue = async () => {
-    await updateDoc(doc(db, "users", `${userId}`), {
-      queue: arrayRemove(movie),
-    });
-
-    if (!isQueue) setQueueList(false);
+    setQueueLoader(true);
+    if (isQueue) {
+      timer.current = window.setTimeout(() => {
+        setQueueLoader(false);
+        setQueueList(false);
+      }, 2000);
+      await updateDoc(doc(db, "users", `${userId}`), {
+        queue: arrayRemove(movie),
+      });
+    } else {
+      await updateDoc(doc(db, "users", `${userId}`), {
+        watched: arrayUnion(movie),
+      });
+      timer.current = window.setTimeout(() => {
+        setQueueLoader(false);
+        setQueueList(false);
+      }, 2000);
+    }
   };
 
   const removeFromWatched = async () => {
-    await updateDoc(doc(db, "users", `${userId}`), {
-      watched: arrayRemove(movie),
-    });
-    if (!isWatched) setWatchedList(false);
+    setWatchedLoader(true);
+    if (isWatched) {
+      timer.current = window.setTimeout(() => {
+        setWatchedLoader(false);
+        setWatchedList(false);
+      }, 2000);
+      await updateDoc(doc(db, "users", `${userId}`), {
+        watched: arrayRemove(movie),
+      });
+    } else {
+      await updateDoc(doc(db, "users", `${userId}`), {
+        watched: arrayRemove(movie),
+      });
+      timer.current = window.setTimeout(() => {
+        setWatchedLoader(false);
+        setWatchedList(false);
+      }, 2000);
+    }
   };
 
   const {
@@ -314,29 +360,43 @@ const MovieModal: React.FC<IProps> = (props) => {
                 <Button
                   variant="contained"
                   sx={{
-                    minWidth: { xs: "110px" },
+                    position: "relative",
+                    width: { xs: "130px" },
                     height: "45px",
                     color: "common.white",
                   }}
+                  disabled={watchedLoader}
                   onClick={
                     isWatched || watchedList ? removeFromWatched : addToWatched
                   }
                 >
-                  {isWatched || watchedList
-                    ? "remove from Watched"
-                    : "add to Watched"}
+                  {watchedLoader ? (
+                    <ButtonLoader theme="light" />
+                  ) : isWatched || watchedList ? (
+                    "remove from Watched"
+                  ) : (
+                    "add to Watched"
+                  )}
                 </Button>
                 <Button
                   variant="outlined"
                   sx={{
+                    position: "relative",
                     color: "common.black",
                     borderColor: "common.black",
-                    minWidth: { xs: "110px" },
+                    width: { xs: "130px" },
                     height: "45px",
                   }}
+                  disabled={queueLoader}
                   onClick={isQueue || queueList ? removeFromQueue : addToQueue}
                 >
-                  {isQueue || queueList ? "remove from queue" : "add to queue"}
+                  {queueLoader ? (
+                    <ButtonLoader />
+                  ) : isQueue || queueList ? (
+                    "remove from queue"
+                  ) : (
+                    "add to queue"
+                  )}
                 </Button>
               </ThemeProvider>
             </Box>

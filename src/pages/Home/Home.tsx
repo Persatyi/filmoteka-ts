@@ -3,7 +3,7 @@ import MovieCard from "components/MovieCard";
 import MoviePagination from "components/MoviePagination";
 import ModalWrapper from "components/ModalWrapper";
 import MovieModal from "components/Modals/MovieModal";
-import Loader from "components/Loader";
+import MovieSkeleton from "components/MovieSkeleton";
 
 import { Box } from "@mui/material";
 
@@ -40,9 +40,9 @@ const Home: React.FC = () => {
         (error ? (
           <p>Something went wrong please reload the page</p>
         ) : isLoading ? (
-          <Loader />
+          <MovieSkeleton />
         ) : isFetching ? (
-          <Loader />
+          <MovieSkeleton />
         ) : data ? (
           <>
             <Box
@@ -81,9 +81,9 @@ const Home: React.FC = () => {
         (searchError ? (
           <p>Something went wrong please reload the page</p>
         ) : searchLoading ? (
-          <Loader />
+          <MovieSkeleton />
         ) : isSearchFetching ? (
-          <Loader />
+          <MovieSkeleton />
         ) : searchData ? (
           <>
             <Box

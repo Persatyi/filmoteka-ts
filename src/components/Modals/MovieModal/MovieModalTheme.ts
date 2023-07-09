@@ -157,7 +157,7 @@ export const button = createTheme({
           height: "45px",
           fontFamily: "Roboto, sans-serif",
           fontWeight: 500,
-          fontSize: "12px",
+          fontSize: "11px",
           lineHeight: 1.33,
           textAlign: "center",
           alignContent: "end",

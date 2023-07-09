@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import MovieCard from "components/MovieCard";
 import ModalWrapper from "components/ModalWrapper";
 import MovieModal from "components/Modals/MovieModal";
-import Loader from "components/Loader";
+import MovieSkeleton from "components/MovieSkeleton";
 import { doc, onSnapshot } from "firebase/firestore";
 
 import { Box } from "@mui/material";
@@ -72,7 +72,7 @@ const Library: React.FC = () => {
   };
 
   if (isLoading) {
-    return <Loader />;
+    return <MovieSkeleton />;
   }
 
   if (watchedData.length === 0) {

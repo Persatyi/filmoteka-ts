@@ -7,7 +7,7 @@ import Overlay from "components/Overlay";
 interface IProps {
   onClose: Function;
   open: boolean;
-  children: JSX.Element | JSX.Element[];
+  children: JSX.Element;
 }
 
 const ModalWrapper: React.FC<IProps> = ({ onClose, open, children }) => {

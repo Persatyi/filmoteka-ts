@@ -1,12 +1,13 @@
+import React from "react";
 import ModalWrapper from "components/ModalWrapper";
 import LoginModal from "components/Modals/LoginModal";
 import RegisterModal from "components/Modals/RegisterModal";
 
 import { Tab } from "@mui/material";
 
-import { useToggle } from "hooks";
+import useToggle from "./../../../hooks/useToggle";
 
-import * as s from "./RegistrationField";
+import * as s from "./RegistrationFieldTheme";
 
 const RegistrationField = () => {
   const [openLogin, , setLogin] = useToggle();

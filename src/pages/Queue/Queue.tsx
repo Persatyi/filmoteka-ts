@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import MovieCard from "components/MovieCard";
 import ModalWrapper from "components/ModalWrapper";
 import MovieModal from "components/Modals/MovieModal";
-import Loader from "components/Loader";
+import MovieSkeleton from "components/MovieSkeleton";
 import { doc, onSnapshot } from "firebase/firestore";
 
 import { Box } from "@mui/material";
@@ -73,7 +73,7 @@ const Queue = () => {
   };
 
   if (isLoading) {
-    return <Loader />;
+    return <MovieSkeleton />;
   }
 
   if (queueData.length === 0) {
