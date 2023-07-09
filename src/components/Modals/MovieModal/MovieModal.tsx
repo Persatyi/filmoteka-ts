@@ -16,6 +16,7 @@ import * as s from "./MovieModalTheme";
 import sprite from "assets/images/Sprite/sprite.svg";
 import VideoPlayer from "components/VideoPlayer";
 import ButtonLoader from "components/ButtonLoader/ButtonLoader";
+import MovieSnackbar from "components/MovieSnackbar/MovieSnackbar";
 
 import { get, genresKey } from "localStorage/localStorage";
 import { useGetVideoQuery } from "services/APIService";
