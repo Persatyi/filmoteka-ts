@@ -29,7 +29,7 @@ let allGenres: { id: number; name: string }[];
 })();
 
 interface IData {
-  overview: string;
+  overview?: string | undefined;
   vote_average: number;
   vote_count: number;
   popularity: number;
@@ -56,11 +56,11 @@ const MovieModal: React.FC<IProps> = (props) => {
   const [watchedList, setWatchedList] = useState<boolean>(false);
   const [queueList, setQueueList] = useState<boolean>(false);
 
-  const { isAuth, id: userId } = useAuth();
-
   const [mode, setMode] = useState("");
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  const { isAuth, id: userId } = useAuth();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -75,23 +75,33 @@ const MovieModal: React.FC<IProps> = (props) => {
 
   const movie: IData = data.find((el) => el.id === id)!;
 
-  if (!isQueue && !isWatched) {
+  const checkIsInList = async (type: string) => {
     const docRef = doc(db, "users", `${userId}`);
     getDoc(docRef).then((res) => {
       const list = res.data();
       if (list) {
-        const inQueue = list.queue.find((el: { id: number }) => el.id === id);
-        if (inQueue) {
+        const inList = list[type].find((el: { id: number }) => el.id === id);
+        if (inList && type === "queue") {
           setQueueList(true);
         }
-        const inWatched = list.watched.find(
-          (el: { id: number }) => el.id === id
-        );
-        if (inWatched) {
+        if (inList && type === "watched") {
           setWatchedList(true);
         }
       }
     });
+  };
+
+  if (!isQueue && isWatched) {
+    checkIsInList("queue");
+  }
+
+  if (isQueue && !isWatched) {
+    checkIsInList("watched");
+  }
+
+  if (!isQueue && !isWatched) {
+    checkIsInList("watched");
+    checkIsInList("queue");
   }
 
   const addToQueue = async () => {
@@ -112,10 +122,15 @@ const MovieModal: React.FC<IProps> = (props) => {
     await updateDoc(doc(db, "users", `${userId}`), {
       queue: arrayRemove(movie),
     });
+
+    if (!isQueue) setQueueList(false);
   };
 
   const removeFromWatched = async () => {
-    console.log("removeFromWatched");
+    await updateDoc(doc(db, "users", `${userId}`), {
+      watched: arrayRemove(movie),
+    });
+    if (!isWatched) setWatchedList(false);
   };
 
   const {

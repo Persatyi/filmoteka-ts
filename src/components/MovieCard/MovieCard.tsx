@@ -21,7 +21,7 @@ interface IProps {
     id: number;
     poster_path?: string | undefined;
     name?: string | undefined;
-    overview: string;
+    overview?: string | undefined;
     vote_average: number;
     popularity: number;
     original_name: string;

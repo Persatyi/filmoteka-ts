@@ -3,7 +3,7 @@ import MovieCard from "components/MovieCard";
 import ModalWrapper from "components/ModalWrapper";
 import MovieModal from "components/Modals/MovieModal";
 import Loader from "components/Loader";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 
 import { Box } from "@mui/material";
 
@@ -17,7 +17,7 @@ interface IElement {
   id: number;
   poster_path?: string | undefined;
   name?: string;
-  overview: string;
+  overview?: string | undefined;
   vote_average: number;
   popularity: number;
   original_name: string;
@@ -29,6 +29,9 @@ interface IElement {
 }
 
 const Queue = () => {
+  const [value, toggle, setValue] = useToggle();
+  const [id, setId] = useState(0);
+
   const dispatch = useAppDispatch();
 
   const isLoading = useAppSelector((state) => state.dataReducer.isLoading);
@@ -41,12 +44,19 @@ const Queue = () => {
     try {
       dispatch(setLoader(true));
       const docRef = doc(db, "users", `${userId}`);
-      const queueList = await getDoc(docRef);
-      const list = queueList.data();
-      if (list) {
-        dispatch(setLoader(false));
-        setQueueData(list.queue);
-      }
+      await onSnapshot(docRef, (doc) => {
+        const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+        // Ця умова закриває модальне вікно після того як відбулося видалення елементу
+        // із модального вікна і масив оновився, коли ми знаходимося на сторінці Queue.
+        if (source === "Local") {
+          setValue(false);
+        }
+        const list = doc.data();
+        if (list) {
+          dispatch(setLoader(false));
+          setQueueData(list.queue);
+        }
+      });
     } catch (error) {
       console.log(error);
       dispatch(setLoader(false));
@@ -56,9 +66,6 @@ const Queue = () => {
   useEffect(() => {
     getQueueList();
   }, [userId]);
-
-  const [value, toggle, setValue] = useToggle();
-  const [id, setId] = useState(0);
 
   const handleModal = (id: number) => {
     toggle();
