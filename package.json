@@ -1,5 +1,6 @@
 {
   "name": "filmoteka-ts",
+  "homepage": "https://persatyi.github.io/filmoteka-ts",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -22,6 +23,7 @@
     "@types/react-swipeable-views": "^0.13.1",
     "firebase": "^9.23.0",
     "formik": "^2.4.2",
+    "gh-pages": "^5.0.0",
     "modern-normalize": "^1.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -39,6 +41,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -62,6 +62,12 @@ const MovieModal: React.FC<IProps> = (props) => {
   const [watchedList, setWatchedList] = useState<boolean>(false);
   const [queueList, setQueueList] = useState<boolean>(false);
 
+  const [snackType, setSnackType] = useState<
+    "success" | "error" | "warning" | "info"
+  >("success");
+  const [snackText, setSnackText] = useState<string>("");
+  const [openSnack, setOpenSnack] = useState<boolean>(false);
+
   const [mode, setMode] = useState("");
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -124,6 +130,9 @@ const MovieModal: React.FC<IProps> = (props) => {
     timer.current = window.setTimeout(() => {
       setQueueLoader(false);
       setQueueList(true);
+      setOpenSnack(true);
+      setSnackType("success");
+      setSnackText("Movie successfully added to queue.");
     }, 2000);
   };
 
@@ -135,6 +144,9 @@ const MovieModal: React.FC<IProps> = (props) => {
     timer.current = window.setTimeout(() => {
       setWatchedLoader(false);
       setWatchedList(true);
+      setOpenSnack(true);
+      setSnackType("success");
+      setSnackText("Movie successfully added to watched.");
     }, 2000);
   };
 
@@ -144,6 +156,9 @@ const MovieModal: React.FC<IProps> = (props) => {
       timer.current = window.setTimeout(() => {
         setQueueLoader(false);
         setQueueList(false);
+        setOpenSnack(true);
+        setSnackType("success");
+        setSnackText("Movie successfully removed from queue.");
       }, 2000);
       await updateDoc(doc(db, "users", `${userId}`), {
         queue: arrayRemove(movie),
@@ -155,6 +170,9 @@ const MovieModal: React.FC<IProps> = (props) => {
       timer.current = window.setTimeout(() => {
         setQueueLoader(false);
         setQueueList(false);
+        setOpenSnack(true);
+        setSnackType("success");
+        setSnackText("Movie successfully removed from queue.");
       }, 2000);
     }
   };
@@ -165,6 +183,9 @@ const MovieModal: React.FC<IProps> = (props) => {
       timer.current = window.setTimeout(() => {
         setWatchedLoader(false);
         setWatchedList(false);
+        setOpenSnack(true);
+        setSnackType("success");
+        setSnackText("Movie successfully removed from watched.");
       }, 2000);
       await updateDoc(doc(db, "users", `${userId}`), {
         watched: arrayRemove(movie),
@@ -176,6 +197,9 @@ const MovieModal: React.FC<IProps> = (props) => {
       timer.current = window.setTimeout(() => {
         setWatchedLoader(false);
         setWatchedList(false);
+        setOpenSnack(true);
+        setSnackType("success");
+        setSnackText("Movie successfully removed from watched.");
       }, 2000);
     }
   };
@@ -213,38 +237,65 @@ const MovieModal: React.FC<IProps> = (props) => {
   }
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <Box component="div" sx={s.border}>
-        <Button
-          sx={{
-            position: "absolute",
-            top: "10px",
-            right: "10px",
-            minWidth: "15px",
-            minHeight: "15px",
-            padding: "0px",
-          }}
-          onClick={onClose}
-        >
-          <svg width="15px" height="15px">
-            <use href={`${sprite}#icon-cross`}></use>
-          </svg>
-        </Button>
-        <Box component="div" sx={s.imageWrapper}>
-          <Box component="img" src={poster} alt="img" sx={s.image} />
-          {youtubeVideo?.results.length !== 0 ? (
-            <>
-              {mode !== "" ? (
-                <Tooltip title="Close player" enterDelay={500} leaveDelay={200}>
+    <>
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Box component="div" sx={s.border}>
+          <Button
+            sx={{
+              position: "absolute",
+              top: "10px",
+              right: "10px",
+              minWidth: "15px",
+              minHeight: "15px",
+              padding: "0px",
+            }}
+            onClick={onClose}
+          >
+            <svg width="15px" height="15px">
+              <use href={`${sprite}#icon-cross`}></use>
+            </svg>
+          </Button>
+          <Box component="div" sx={s.imageWrapper}>
+            <Box component="img" src={poster} alt="img" sx={s.image} />
+            {youtubeVideo?.results.length !== 0 ? (
+              <>
+                {mode !== "" ? (
+                  <Tooltip
+                    title="Close player"
+                    enterDelay={500}
+                    leaveDelay={200}
+                  >
+                    <Button
+                      onClick={() => handleClose()}
+                      sx={{
+                        position: "absolute",
+                        bottom: "9px",
+                        right: { xs: "40px", laptop: "80px" },
+                      }}
+                    >
+                      <CancelPresentationIcon
+                        fontSize="large"
+                        sx={{
+                          color: "#c00",
+                        }}
+                      />
+                    </Button>
+                  </Tooltip>
+                ) : null}
+                <Tooltip
+                  title="Watch trailer"
+                  enterDelay={500}
+                  leaveDelay={200}
+                >
                   <Button
-                    onClick={() => handleClose()}
                     sx={{
                       position: "absolute",
-                      bottom: "9px",
-                      right: { xs: "40px", laptop: "80px" },
+                      bottom: "10px",
+                      right: { xs: "0px", laptop: "35px" },
                     }}
+                    onClick={handleClick}
                   >
-                    <CancelPresentationIcon
+                    <YouTubeIcon
                       fontSize="large"
                       sx={{
                         color: "#c00",
@@ -252,160 +303,154 @@ const MovieModal: React.FC<IProps> = (props) => {
                     />
                   </Button>
                 </Tooltip>
-              ) : null}
-              <Tooltip title="Watch trailer" enterDelay={500} leaveDelay={200}>
-                <Button
-                  sx={{
-                    position: "absolute",
-                    bottom: "10px",
-                    right: { xs: "0px", laptop: "35px" },
+                <Menu
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "center",
                   }}
-                  onClick={handleClick}
+                  transformOrigin={{
+                    vertical: "bottom",
+                    horizontal: "center",
+                  }}
+                  id="long-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "long-button",
+                  }}
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={() => handleClose()}
+                  PaperProps={{
+                    style: {
+                      maxHeight: 48 * 4.5,
+                      maxWidth: "280px",
+                      minWidth: "100px",
+                    },
+                  }}
                 >
-                  <YouTubeIcon
-                    fontSize="large"
-                    sx={{
-                      color: "#c00",
-                    }}
-                  />
-                </Button>
-              </Tooltip>
-              <Menu
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "center",
-                }}
-                transformOrigin={{
-                  vertical: "bottom",
-                  horizontal: "center",
-                }}
-                id="long-menu"
-                MenuListProps={{
-                  "aria-labelledby": "long-button",
-                }}
-                anchorEl={anchorEl}
-                open={open}
-                onClose={() => handleClose()}
-                PaperProps={{
-                  style: {
-                    maxHeight: 48 * 4.5,
-                    maxWidth: "280px",
-                    minWidth: "100px",
-                  },
-                }}
-              >
-                {youtubeVideo?.results?.map(({ key, name }) => (
-                  <MenuItem key={key} onClick={() => handleClose(key)}>
-                    {name}
-                  </MenuItem>
-                ))}
-              </Menu>
-            </>
-          ) : null}
-        </Box>
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <Typography component="h3" sx={s.title}>
-            {original_title}
-          </Typography>
-          <Box component="ul" sx={{ mb: { xs: "20px" } }}>
-            <Box component="li" sx={s.item}>
-              <Typography component="span" sx={s.options}>
-                Vote / Votes
-              </Typography>
-              <Typography component="span" sx={s.rating}>
-                {rating}
-              </Typography>
-              <Typography component="span" sx={s.divider}>
-                /
-              </Typography>
-              <Typography component="span" sx={s.voteCount}>
-                {vote_count}
-              </Typography>
-            </Box>
-            <Box component="li" sx={s.item}>
-              <Typography component="span" sx={s.options}>
-                Popularity
-              </Typography>
-              <Typography component="span" sx={s.popularity}>
-                {popularity}
-              </Typography>
-            </Box>
-            <Box component="li" sx={s.item}>
-              <Typography component="span" sx={s.options}>
-                Original Title
-              </Typography>
-              <Typography component="span" sx={s.filmTitle}>
-                {filmTitle}
-              </Typography>
-            </Box>
-            <Box component="li" sx={{ ...s.item, mb: "0px" }}>
-              <Typography component="span" sx={s.options}>
-                Genre
-              </Typography>
-              <Typography component="span" sx={s.genresNames}>
-                {genresNames}
-              </Typography>
-            </Box>
+                  {youtubeVideo?.results?.map(({ key, name }) => (
+                    <MenuItem key={key} onClick={() => handleClose(key)}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </>
+            ) : null}
           </Box>
-          <Typography component="p" sx={s.about}>
-            About
-          </Typography>
-          <Box sx={s.overviewWrapper}>
-            <Typography component="p" sx={s.overview}>
-              {overview}
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Typography component="h3" sx={s.title}>
+              {original_title}
             </Typography>
-          </Box>
-          {isAuth ? (
-            <Box component="div" sx={s.buttonsWrapper}>
-              <ThemeProvider theme={s.button}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    position: "relative",
-                    width: { xs: "130px" },
-                    height: "45px",
-                    color: "common.white",
-                  }}
-                  disabled={watchedLoader}
-                  onClick={
-                    isWatched || watchedList ? removeFromWatched : addToWatched
-                  }
-                >
-                  {watchedLoader ? (
-                    <ButtonLoader theme="light" />
-                  ) : isWatched || watchedList ? (
-                    "remove from Watched"
-                  ) : (
-                    "add to Watched"
-                  )}
-                </Button>
-                <Button
-                  variant="outlined"
-                  sx={{
-                    position: "relative",
-                    color: "common.black",
-                    borderColor: "common.black",
-                    width: { xs: "130px" },
-                    height: "45px",
-                  }}
-                  disabled={queueLoader}
-                  onClick={isQueue || queueList ? removeFromQueue : addToQueue}
-                >
-                  {queueLoader ? (
-                    <ButtonLoader />
-                  ) : isQueue || queueList ? (
-                    "remove from queue"
-                  ) : (
-                    "add to queue"
-                  )}
-                </Button>
-              </ThemeProvider>
+            <Box component="ul" sx={{ mb: { xs: "20px" } }}>
+              <Box component="li" sx={s.item}>
+                <Typography component="span" sx={s.options}>
+                  Vote / Votes
+                </Typography>
+                <Typography component="span" sx={s.rating}>
+                  {rating}
+                </Typography>
+                <Typography component="span" sx={s.divider}>
+                  /
+                </Typography>
+                <Typography component="span" sx={s.voteCount}>
+                  {vote_count}
+                </Typography>
+              </Box>
+              <Box component="li" sx={s.item}>
+                <Typography component="span" sx={s.options}>
+                  Popularity
+                </Typography>
+                <Typography component="span" sx={s.popularity}>
+                  {popularity}
+                </Typography>
+              </Box>
+              <Box component="li" sx={s.item}>
+                <Typography component="span" sx={s.options}>
+                  Original Title
+                </Typography>
+                <Typography component="span" sx={s.filmTitle}>
+                  {filmTitle}
+                </Typography>
+              </Box>
+              <Box component="li" sx={{ ...s.item, mb: "0px" }}>
+                <Typography component="span" sx={s.options}>
+                  Genre
+                </Typography>
+                <Typography component="span" sx={s.genresNames}>
+                  {genresNames}
+                </Typography>
+              </Box>
             </Box>
-          ) : null}
+            <Typography component="p" sx={s.about}>
+              About
+            </Typography>
+            <Box sx={s.overviewWrapper}>
+              <Typography component="p" sx={s.overview}>
+                {overview}
+              </Typography>
+            </Box>
+            {isAuth ? (
+              <Box component="div" sx={s.buttonsWrapper}>
+                <ThemeProvider theme={s.button}>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      position: "relative",
+                      width: { xs: "130px" },
+                      height: "45px",
+                      color: "common.white",
+                    }}
+                    disabled={watchedLoader}
+                    onClick={
+                      isWatched || watchedList
+                        ? removeFromWatched
+                        : addToWatched
+                    }
+                  >
+                    {watchedLoader ? (
+                      <ButtonLoader theme="light" />
+                    ) : isWatched || watchedList ? (
+                      "remove from Watched"
+                    ) : (
+                      "add to Watched"
+                    )}
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      position: "relative",
+                      color: "common.black",
+                      borderColor: "common.black",
+                      width: { xs: "130px" },
+                      height: "45px",
+                    }}
+                    disabled={queueLoader}
+                    onClick={
+                      isQueue || queueList ? removeFromQueue : addToQueue
+                    }
+                  >
+                    {queueLoader ? (
+                      <ButtonLoader />
+                    ) : isQueue || queueList ? (
+                      "remove from queue"
+                    ) : (
+                      "add to queue"
+                    )}
+                  </Button>
+                </ThemeProvider>
+              </Box>
+            ) : null}
+          </Box>
         </Box>
+        {mode !== "" ? <VideoPlayer movieId={mode} /> : null}
       </Box>
-      {mode !== "" ? <VideoPlayer movieId={mode} /> : null}
-    </Box>
+      {openSnack && (
+        <MovieSnackbar
+          type={snackType}
+          openSnack={openSnack}
+          text={snackText}
+        />
+      )}
+    </>
   );
 };
 

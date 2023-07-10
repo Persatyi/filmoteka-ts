@@ -1,12 +1,11 @@
 import * as React from "react";
-import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
 interface IProps {
   text: string;
   openSnack: boolean;
-  type: "success" | "error" | "warning" | "info";
+  type?: "success" | "error" | "warning" | "info";
 }
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -34,13 +33,15 @@ const MovieSnackbar: React.FC<IProps> = ({
     setOpen(false);
   };
   return (
-    <Stack spacing={2} sx={{ width: "100%" }}>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity={type} sx={{ width: "100%" }}>
-          {text}
-        </Alert>
-      </Snackbar>
-    </Stack>
+    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Alert
+        onClose={handleClose}
+        severity={!!type ? type : "success"}
+        sx={{ minWidth: "20%" }}
+      >
+        {text}
+      </Alert>
+    </Snackbar>
   );
 };
 
