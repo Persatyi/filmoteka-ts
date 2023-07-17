@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.36e91160.css",
-    "main.js": "/static/js/main.56dccae4.js",
-    "static/media/main_bg_2x.jpg": "/static/media/main_bg_2x.6557f48c928e08ec6e0b.jpg",
-    "static/media/secondary_bg_2x.jpg": "/static/media/secondary_bg_2x.44b3ac9af201769b18bb.jpg",
-    "static/media/main_bg.jpg": "/static/media/main_bg.b28be4de0ce1e225023d.jpg",
-    "static/media/secondary_bg.jpg": "/static/media/secondary_bg.1addd9983dce9d147288.jpg",
-    "static/media/noImage.jpg": "/static/media/noImage.7555b15218a0f4733bf7.jpg",
-    "static/media/sprite.svg": "/static/media/sprite.330e008db26b57e57c00d4cb0ac06cf7.svg",
-    "index.html": "/index.html",
-    "main.36e91160.css.map": "/static/css/main.36e91160.css.map",
-    "main.56dccae4.js.map": "/static/js/main.56dccae4.js.map"
+    "main.css": "/filmoteka-ts/static/css/main.36e91160.css",
+    "main.js": "/filmoteka-ts/static/js/main.e133c2a0.js",
+    "static/media/main_bg_2x.jpg": "/filmoteka-ts/static/media/main_bg_2x.6557f48c928e08ec6e0b.jpg",
+    "static/media/secondary_bg_2x.jpg": "/filmoteka-ts/static/media/secondary_bg_2x.44b3ac9af201769b18bb.jpg",
+    "static/media/main_bg.jpg": "/filmoteka-ts/static/media/main_bg.b28be4de0ce1e225023d.jpg",
+    "static/media/secondary_bg.jpg": "/filmoteka-ts/static/media/secondary_bg.1addd9983dce9d147288.jpg",
+    "static/media/noImage.jpg": "/filmoteka-ts/static/media/noImage.7555b15218a0f4733bf7.jpg",
+    "static/media/sprite.svg": "/filmoteka-ts/static/media/sprite.330e008db26b57e57c00d4cb0ac06cf7.svg",
+    "index.html": "/filmoteka-ts/index.html",
+    "main.36e91160.css.map": "/filmoteka-ts/static/css/main.36e91160.css.map",
+    "main.e133c2a0.js.map": "/filmoteka-ts/static/js/main.e133c2a0.js.map"
   },
   "entrypoints": [
     "static/css/main.36e91160.css",
-    "static/js/main.56dccae4.js"
+    "static/js/main.e133c2a0.js"
   ]
 }
