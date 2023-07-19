@@ -9,11 +9,12 @@ import { doc, onSnapshot } from "firebase/firestore";
 
 import { Box } from "@mui/material";
 
-import { useAppDispatch, useAppSelector } from "hooks/hooks";
+import { useAppDispatch } from "hooks/hooks";
 import { setLoader } from "redux/dataSlice/dataSlice";
 import { db } from "services/firebase";
 import { useToggle } from "hooks";
 import { useAuth } from "hooks/useAuth";
+import { useData } from "hooks/useData";
 
 interface IElement {
   id: number;
@@ -36,8 +37,7 @@ const Queue = () => {
 
   const dispatch = useAppDispatch();
 
-  const isLoading = useAppSelector((state) => state.dataReducer.isLoading);
-
+  const { isLoading } = useData();
   const { id: userId } = useAuth();
 
   const [queueData, setQueueData] = useState<any>([]);

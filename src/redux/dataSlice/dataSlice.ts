@@ -1,14 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export enum Mode {
+  SEARCH,
+  POPULAR,
+}
+
 interface IInitialData {
-  mode: "search" | "popular";
+  mode: Mode;
   page: number;
   query: string;
   isLoading: boolean;
 }
 
 const initialState = {
-  mode: "popular",
+  mode: Mode.POPULAR,
   page: 1,
   query: "",
   isLoading: false,
@@ -19,12 +24,12 @@ const dataSlice = createSlice({
   initialState,
   reducers: {
     setSearch(state, { payload }) {
-      state.mode = "search";
+      state.mode = Mode.SEARCH;
       state.page = 1;
       state.query = payload;
     },
     setPopular(state) {
-      state.mode = "popular";
+      state.mode = Mode.POPULAR;
       state.query = "";
       state.page = 1;
     },

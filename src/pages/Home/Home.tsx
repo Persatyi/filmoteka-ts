@@ -11,12 +11,11 @@ import { Box } from "@mui/material";
 
 import { useGetPopularQuery, useSearchMovieQuery } from "services/APIService";
 import { useToggle } from "hooks";
-import { useAppSelector } from "hooks/hooks";
+import { useData } from "hooks/useData";
+import { Mode } from "redux/dataSlice/dataSlice";
 
 const Home: React.FC = () => {
-  const mode = useAppSelector((state) => state.dataReducer.mode);
-  const page = useAppSelector((state) => state.dataReducer.page);
-  const query = useAppSelector((state) => state.dataReducer.query);
+  const { mode, page, query } = useData();
 
   const [value, toggle, setValue] = useToggle();
   const [id, setId] = useState(0);
@@ -27,18 +26,18 @@ const Home: React.FC = () => {
   };
 
   const { data, error, isLoading, isFetching } = useGetPopularQuery(page, {
-    skip: mode === "search",
+    skip: mode === Mode.SEARCH,
   });
   const {
     data: searchData,
     error: searchError,
     isLoading: searchLoading,
     isFetching: isSearchFetching,
-  } = useSearchMovieQuery({ page, query }, { skip: mode === "popular" });
+  } = useSearchMovieQuery({ page, query }, { skip: mode === Mode.POPULAR });
 
   return (
     <>
-      {mode === "popular" &&
+      {mode === Mode.POPULAR &&
         (error ? (
           <p>Something went wrong please reload the page</p>
         ) : isLoading ? (
@@ -70,7 +69,7 @@ const Home: React.FC = () => {
             </ModalWrapper>
           </>
         ) : null)}
-      {mode === "search" &&
+      {mode === Mode.SEARCH &&
         (searchError ? (
           <p>Something went wrong please reload the page</p>
         ) : searchLoading ? (
