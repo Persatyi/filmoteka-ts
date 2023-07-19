@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+
+import MovieList from "components/MovieList/MovieList";
 import MovieCard from "components/MovieCard";
 import MoviePagination from "components/MoviePagination";
 import ModalWrapper from "components/ModalWrapper";
@@ -45,16 +47,7 @@ const Home: React.FC = () => {
           <MovieSkeleton />
         ) : data ? (
           <>
-            <Box
-              display="grid"
-              gridTemplateColumns={{
-                xs: "repeat(1, 1fr)",
-                tablet: "repeat(2, 1fr)",
-                laptop: "repeat(3, 1fr)",
-              }}
-              gap={{ xs: 0, tablet: 2 }}
-              sx={{ justifyItems: { mobile: "center" } }}
-            >
+            <MovieList>
               {data.results.map((element) => (
                 <Box
                   gridColumn="span 1"
@@ -64,7 +57,7 @@ const Home: React.FC = () => {
                   <MovieCard data={element} />
                 </Box>
               ))}
-            </Box>
+            </MovieList>
 
             <MoviePagination page={data.page} count={data.total_pages} />
 
@@ -86,16 +79,7 @@ const Home: React.FC = () => {
           <MovieSkeleton />
         ) : searchData ? (
           <>
-            <Box
-              display="grid"
-              gridTemplateColumns={{
-                xs: "repeat(1, 1fr)",
-                tablet: "repeat(2, 1fr)",
-                laptop: "repeat(3, 1fr)",
-              }}
-              gap={{ xs: 0, tablet: 2 }}
-              sx={{ justifyItems: { mobile: "center" } }}
-            >
+            <MovieList>
               {searchData.results.map((element) => (
                 <Box
                   gridColumn="span 1"
@@ -105,7 +89,7 @@ const Home: React.FC = () => {
                   <MovieCard data={element} />
                 </Box>
               ))}
-            </Box>
+            </MovieList>
 
             <MoviePagination
               page={searchData.page}

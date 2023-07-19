@@ -14,6 +14,7 @@ import {
 
 import * as s from "./MovieModalTheme";
 import sprite from "assets/images/Sprite/sprite.svg";
+import noImage from "assets/images/noImage.jpg";
 import VideoPlayer from "components/VideoPlayer";
 import ButtonLoader from "components/ButtonLoader/ButtonLoader";
 import MovieSnackbar from "components/MovieSnackbar/MovieSnackbar";
@@ -224,11 +225,6 @@ const MovieModal: React.FC<IProps> = (props) => {
         .join(", ") || "Genre is not specified"
     : "Genre is not specified";
 
-  const poster = poster_path
-    ? `https://image.tmdb.org/t/p/w500${poster_path}`
-    : require("../../../assets/images/noImage.jpg");
-
-  const filmTitle = original_title || title || name || original_name;
   let rating = "0.0";
   if (String(vote_average)?.length === 1) {
     rating = vote_average + ".0";
@@ -256,7 +252,16 @@ const MovieModal: React.FC<IProps> = (props) => {
             </svg>
           </Button>
           <Box component="div" sx={s.imageWrapper}>
-            <Box component="img" src={poster} alt="img" sx={s.image} />
+            <Box
+              component="img"
+              src={
+                poster_path
+                  ? `https://image.tmdb.org/t/p/w500${poster_path}`
+                  : noImage
+              }
+              alt="img"
+              sx={s.image}
+            />
             {youtubeVideo?.results.length !== 0 ? (
               <>
                 {mode !== "" ? (
@@ -368,7 +373,7 @@ const MovieModal: React.FC<IProps> = (props) => {
                   Original Title
                 </Typography>
                 <Typography component="span" sx={s.filmTitle}>
-                  {filmTitle}
+                  {original_title || title || name || original_name}
                 </Typography>
               </Box>
               <Box component="li" sx={{ ...s.item, mb: "0px" }}>

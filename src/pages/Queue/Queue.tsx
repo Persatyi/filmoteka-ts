@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+
+import MovieList from "components/MovieList/MovieList";
 import MovieCard from "components/MovieCard";
 import ModalWrapper from "components/ModalWrapper";
 import MovieModal from "components/Modals/MovieModal";
@@ -81,16 +83,7 @@ const Queue = () => {
   } else {
     return (
       <>
-        <Box
-          display="grid"
-          gridTemplateColumns={{
-            xs: "repeat(1, 1fr)",
-            tablet: "repeat(2, 1fr)",
-            laptop: "repeat(3, 1fr)",
-          }}
-          gap={{ xs: 0, tablet: 2 }}
-          sx={{ justifyItems: { mobile: "center" } }}
-        >
+        <MovieList>
           {queueData.map((element: IElement) => (
             <Box
               gridColumn="span 1"
@@ -100,7 +93,7 @@ const Queue = () => {
               <MovieCard data={element} />
             </Box>
           ))}
-        </Box>
+        </MovieList>
 
         <ModalWrapper open={value} onClose={() => setValue(false)}>
           <MovieModal
