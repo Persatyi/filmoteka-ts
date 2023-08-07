@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/filmoteka-ts/static/css/main.36e91160.css",
-    "main.js": "/filmoteka-ts/static/js/main.e133c2a0.js",
+    "main.js": "/filmoteka-ts/static/js/main.d899c238.js",
     "static/media/main_bg_2x.jpg": "/filmoteka-ts/static/media/main_bg_2x.6557f48c928e08ec6e0b.jpg",
     "static/media/secondary_bg_2x.jpg": "/filmoteka-ts/static/media/secondary_bg_2x.44b3ac9af201769b18bb.jpg",
     "static/media/main_bg.jpg": "/filmoteka-ts/static/media/main_bg.b28be4de0ce1e225023d.jpg",
@@ -10,10 +10,10 @@
     "static/media/sprite.svg": "/filmoteka-ts/static/media/sprite.330e008db26b57e57c00d4cb0ac06cf7.svg",
     "index.html": "/filmoteka-ts/index.html",
     "main.36e91160.css.map": "/filmoteka-ts/static/css/main.36e91160.css.map",
-    "main.e133c2a0.js.map": "/filmoteka-ts/static/js/main.e133c2a0.js.map"
+    "main.d899c238.js.map": "/filmoteka-ts/static/js/main.d899c238.js.map"
   },
   "entrypoints": [
     "static/css/main.36e91160.css",
-    "static/js/main.e133c2a0.js"
+    "static/js/main.d899c238.js"
   ]
 }
