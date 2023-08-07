@@ -12,9 +12,7 @@ import { Box } from "@mui/material";
 import { useAppDispatch } from "hooks/hooks";
 import { setLoader } from "redux/dataSlice/dataSlice";
 import { db } from "services/firebase";
-import { useToggle } from "hooks";
-import { useAuth } from "hooks/useAuth";
-import { useData } from "hooks/useData";
+import { useToggle, useAuth, useData } from "hooks";
 
 interface IElement {
   id: number;

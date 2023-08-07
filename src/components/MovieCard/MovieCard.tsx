@@ -7,14 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { get, genresKey } from "localStorage/localStorage";
-
-let allGenres: { id: number; name: string }[];
-
-(async function () {
-  const { genres } = await get(genresKey);
-  allGenres = genres;
-})();
+import { posterPath, genresHeandler, dateConverter } from "utils";
 
 interface IProps {
   data: {
@@ -44,17 +37,10 @@ const MovieCard: React.FC<IProps> = ({ data }) => {
     genre_ids,
   } = data;
 
-  const poster = poster_path
-    ? `https://image.tmdb.org/t/p/w500${poster_path}`
-    : require("../../assets/images/noImage.jpg");
+  const poster = posterPath(poster_path);
   const filmTitle = title || name || original_name;
-  const year = new Date(first_air_date || release_date).getFullYear() || "";
-  const genresNames = genre_ids
-    ? genre_ids
-        .filter((id) => allGenres[id])
-        .map((id) => allGenres[id].name)
-        .join(", ") || "Genre is not specified"
-    : "Genre is not specified";
+  const year = dateConverter(first_air_date || release_date);
+  const genresNames = genresHeandler(genre_ids);
 
   return (
     <Card

@@ -5,7 +5,7 @@ import RegisterModal from "components/Modals/RegisterModal";
 
 import { Tab } from "@mui/material";
 
-import useToggle from "./../../../hooks/useToggle";
+import {useToggle} from "hooks";
 
 import * as s from "./RegistrationFieldTheme";
 

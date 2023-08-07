@@ -12,9 +12,7 @@ import { Box } from "@mui/material";
 import { useAppDispatch } from "hooks/hooks";
 import { setLoader } from "redux/dataSlice/dataSlice";
 import { db } from "services/firebase";
-import { useToggle } from "hooks";
-import { useAuth } from "hooks/useAuth";
-import { useData } from "hooks/useData";
+import { useToggle, useAuth, useData } from "hooks";
 
 interface IElement {
   id: number;
@@ -32,7 +30,7 @@ interface IElement {
 }
 
 const Queue = () => {
-  const [value, toggle, setValue] = useToggle();
+  const [openModal, toggle, setOpenModal] = useToggle();
   const [id, setId] = useState(0);
 
   const dispatch = useAppDispatch();
@@ -51,7 +49,7 @@ const Queue = () => {
         // Ця умова закриває модальне вікно після того як відбулося видалення елементу
         // із модального вікна і масив оновився, коли ми знаходимося на сторінці Queue.
         if (source === "Local") {
-          setValue(false);
+          setOpenModal(false);
         }
         const list = doc.data();
         if (list) {
@@ -95,9 +93,9 @@ const Queue = () => {
           ))}
         </MovieList>
 
-        <ModalWrapper open={value} onClose={() => setValue(false)}>
+        <ModalWrapper open={openModal} onClose={() => setOpenModal(false)}>
           <MovieModal
-            onClose={() => setValue(false)}
+            onClose={() => setOpenModal(false)}
             id={id}
             data={queueData}
             isQueue={true}

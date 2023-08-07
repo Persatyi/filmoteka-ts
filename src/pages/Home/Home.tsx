@@ -10,8 +10,7 @@ import MovieSkeleton from "components/MovieSkeleton";
 import { Box } from "@mui/material";
 
 import { useGetPopularQuery, useSearchMovieQuery } from "services/APIService";
-import { useToggle } from "hooks";
-import { useData } from "hooks/useData";
+import { useToggle, useData } from "hooks";
 import { Mode } from "redux/dataSlice/dataSlice";
 
 const Home: React.FC = () => {

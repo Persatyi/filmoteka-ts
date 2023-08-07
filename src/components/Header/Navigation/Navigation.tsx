@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useLocation, matchPath } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { AppBar, Toolbar, Tabs, Tab, Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import SwipeableViews from "react-swipeable-views";
@@ -12,7 +12,7 @@ import SearchField from "../SearchField";
 import RegistrationField from "../RegistrationField";
 import Buttons from "../Buttons";
 
-import { useAppDispatch } from "hooks/hooks";
+import { useAppDispatch, useRouteMatch } from "hooks";
 import { useAuth } from "hooks/useAuth";
 import { setPopular } from "redux/dataSlice/dataSlice";
 
@@ -39,20 +39,6 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-function useRouteMatch(patterns: readonly string[]) {
-  const { pathname } = useLocation();
-
-  for (let i = 0; i < patterns.length; i += 1) {
-    const pattern = patterns[i];
-    const possibleMatch = matchPath(pattern, pathname);
-    if (possibleMatch !== null) {
-      return possibleMatch;
-    }
-  }
-
-  return null;
-}
-
 const Navigation = () => {
   const dispatch = useAppDispatch();
 
@@ -63,6 +49,12 @@ const Navigation = () => {
   const routeMatch = useRouteMatch(["/", "/library"]);
   const currentTab = routeMatch?.pattern?.path;
   const [value, setValue] = useState(currentTab === "/" ? 0 : 1);
+
+  useEffect(() => {
+    if (currentTab === "/" && !isAuth) {
+      setValue(0);
+    }
+  }, [currentTab, isAuth]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
