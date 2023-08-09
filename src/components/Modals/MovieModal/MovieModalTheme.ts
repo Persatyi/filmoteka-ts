@@ -38,7 +38,7 @@ const title = {
 };
 
 const options = {
-  color: "custom.params",
+  color: "palette.custom.params",
   fontFamily: "Roboto, sans-serif",
   fontWeight: 500,
   fontSize: "12px",

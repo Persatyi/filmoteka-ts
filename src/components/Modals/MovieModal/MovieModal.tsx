@@ -19,17 +19,10 @@ import VideoPlayer from "components/VideoPlayer";
 import ButtonLoader from "components/ButtonLoader/ButtonLoader";
 import MovieSnackbar from "components/MovieSnackbar/MovieSnackbar";
 
-import { get, genresKey } from "localStorage/localStorage";
 import { useGetVideoQuery } from "services/APIService";
 import { useAuth } from "hooks/useAuth";
+import { genresHeandler, ratingHeandler } from "utils";
 import { db } from "services/firebase";
-
-let allGenres: { id: number; name: string }[];
-
-(async function () {
-  const { genres } = await get(genresKey);
-  allGenres = genres;
-})();
 
 interface IData {
   overview?: string | undefined;
@@ -218,19 +211,8 @@ const MovieModal: React.FC<IProps> = (props) => {
     genre_ids,
   } = movie;
 
-  const genresNames = genre_ids
-    ? genre_ids
-        .filter((id: number) => allGenres[id])
-        .map((id: number) => allGenres[id].name)
-        .join(", ") || "Genre is not specified"
-    : "Genre is not specified";
-
-  let rating = "0.0";
-  if (String(vote_average)?.length === 1) {
-    rating = vote_average + ".0";
-  } else {
-    rating = vote_average === 10 ? "10.0" : String(vote_average).slice(0, 3);
-  }
+  const genresNames = genresHeandler(genre_ids);
+  const rating = ratingHeandler(vote_average);
 
   return (
     <>
