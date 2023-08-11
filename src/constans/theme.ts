@@ -1,5 +1,15 @@
 import { createTheme } from "@mui/material/styles";
 declare module "@mui/material/styles" {
+  interface BreakpointOverrides {
+    xs: true; // removes the `xs` breakpoint
+    sm: false;
+    md: false;
+    lg: false;
+    xl: false;
+    mobile: true; // adds the `mobile` breakpoint
+    tablet: true;
+    laptop: true;
+  }
   // allow configuration using `createTheme`
   interface PaletteOptions {
     custom?: {
@@ -14,6 +24,15 @@ declare module "@mui/material/styles" {
 }
 
 export const theme = createTheme({
+  spacing: [20, 15, 30],
+  breakpoints: {
+    values: {
+      xs: 0,
+      mobile: 480,
+      tablet: 768,
+      laptop: 1024,
+    },
+  },
   palette: {
     custom: {
       main: "#ff6b08",

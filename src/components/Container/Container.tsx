@@ -1,6 +1,5 @@
 import React from "react";
-import { ThemeProvider } from "@mui/material/styles";
-import { Root, theme } from "./theme";
+import { Root } from "./theme";
 
 interface IPropsType {
   children?: JSX.Element | JSX.Element[];
@@ -8,11 +7,7 @@ interface IPropsType {
 
 const Container: React.FC<IPropsType> = (props) => {
   const { children } = props;
-  return (
-    <ThemeProvider theme={theme}>
-      <Root>{children}</Root>
-    </ThemeProvider>
-  );
+  return <Root>{children}</Root>;
 };
 
 export default Container;
