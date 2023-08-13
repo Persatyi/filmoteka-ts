@@ -5,8 +5,7 @@ interface IPropsType {
   children?: JSX.Element | JSX.Element[];
 }
 
-const Container: React.FC<IPropsType> = (props) => {
-  const { children } = props;
+const Container: React.FC<IPropsType> = ({ children }) => {
   return <Root>{children}</Root>;
 };
 

@@ -11,6 +11,16 @@ declare module "@mui/material/styles" {
     laptop: true;
   }
   // allow configuration using `createTheme`
+  interface Palette {
+    custom: {
+      main: string;
+      text?: string;
+      bg?: string;
+      error?: string;
+      footer?: string;
+      params?: string;
+    };
+  }
   interface PaletteOptions {
     custom?: {
       main: string;
@@ -24,7 +34,7 @@ declare module "@mui/material/styles" {
 }
 
 export const theme = createTheme({
-  spacing: [20, 15, 30],
+  spacing: [15, 20, 30],
   breakpoints: {
     values: {
       xs: 0,
