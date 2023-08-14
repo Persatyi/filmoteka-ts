@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { AppBar, Toolbar, Tabs, Tab, Box } from "@mui/material";
+import { Tabs, Tab, Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import SwipeableViews from "react-swipeable-views";
 
 import * as s from "./NavigationTheme";
+import { StyledAppBar, StyledToolbar } from "./NavigationTheme";
 import sprite from "assets/images/Sprite/sprite.svg";
 import UserDisplay from "components/Header/UserDisplay/UserDisplay";
 
@@ -67,15 +68,8 @@ const Navigation = () => {
 
   return (
     <>
-      <AppBar position="static" color="transparent" sx={{ boxShadow: "unset" }}>
-        <Toolbar
-          disableGutters
-          style={{
-            minHeight: "0px",
-            display: "flex",
-            alignItems: "baseline",
-          }}
-        >
+      <StyledAppBar position="static" color="transparent">
+        <StyledToolbar disableGutters>
           <Tab
             disableRipple
             icon={
@@ -142,8 +136,8 @@ const Navigation = () => {
               <RegistrationField />
             </Box>
           )}
-        </Toolbar>
-      </AppBar>
+        </StyledToolbar>
+      </StyledAppBar>
       <SwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={value}

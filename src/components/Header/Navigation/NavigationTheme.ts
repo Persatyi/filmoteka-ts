@@ -1,17 +1,14 @@
 import { styled } from "@mui/material/styles";
-import { AppBar, Toolbar, Tabs, Tab, Box } from "@mui/material";
+import { AppBar, Toolbar } from "@mui/material";
 
-export const Wrapper = styled(AppBar)(({ theme }) => ({
-  mt: theme.spacing(0),
-  [theme.breakpoints.up("xs")]: {
-    gap: theme.spacing(1),
-  },
-  [theme.breakpoints.up("mobile")]: {
-    gap: theme.spacing(0),
-  },
+export const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  boxShadow: "unset",
+}));
+
+export const StyledToolbar = styled(Toolbar)(({ theme }) => ({
+  minHeight: "0px",
   display: "flex",
-  justifyContent: "center",
-  padding: theme.spacing(2),
+  alignItems: "baseline",
 }));
 
 const icon = {
